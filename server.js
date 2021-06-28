@@ -2,27 +2,33 @@ const express = require("express");
 const multer = require("multer");
 const { v4: uuid } = require("uuid");
 const uploadBuffer = require("./uploadBuffer");
+const cors = require("cors");
+const multipart = require("connect-multiparty");
 
 const upload = multer({ desc: "uploads/" });
 
 const app = express();
 
+app.use(multipart());
 app.use(express.json());
+//enabled for development
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.post("/api/postuploads", upload.single("photo"), async (req, res) => {
+app.post("/api/postuploads", async (req, res) => {
   try {
-    const buffer = req.file.buffer;
+    const file = req.files.upload;
     const postId = `blogimages/posts/test`;
-    const result = await uploadBuffer(buffer, postId);
+    const result = await uploadBuffer(file.path, postId);
     const secureUrl = result.eager[0].secure_url;
-    res.status(201).send({ url: secureUrl });
+    console.log(secureUrl);
+    res.status(201).send({ uploaded: true, url: secureUrl });
   } catch (err) {
     console.log(err);
-    res.send("Something went wrong");
+    res.status(500).send({ uploaded: false, url: "invalid image file" });
   }
 });
 
