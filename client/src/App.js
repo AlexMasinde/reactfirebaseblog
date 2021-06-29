@@ -1,8 +1,11 @@
-import React from "react";
-import { Button } from "semantic-ui-react";
-
 function App() {
-  return <Button>Publish</Button>;
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Topman</h1>
+      </header>
+    </div>
+  );
 }
 
 export default App;
