@@ -1,0 +1,133 @@
+/* Common styles */
+.editor_header,
+.editor_upload {
+  display: flex;
+}
+
+/* border */
+.editor_title > input,
+.editor_text textarea,
+.editor_categories > select {
+  border: 1px solid rgb(159, 165, 173, 0.2);
+}
+
+.editor_title > input,
+.editor_text textarea,
+.editor_upload_button,
+.editor_categories > select,
+.instructions__tips--container {
+  border-radius: 4px;
+}
+
+/* editor header styling */
+.editor_header {
+  justify-content: center;
+  border-bottom: 1px solid rgb(159, 165, 173, 0.2);
+}
+
+.editor_header > p {
+  padding: 0.5rem 2rem;
+}
+
+.editor_header > p:hover {
+  cursor: pointer;
+}
+
+/* image upload section */
+.editor_upload {
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+}
+
+.editor_upload_button > input {
+  display: none;
+}
+
+.editor_upload_button {
+  display: inline-block;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* Title input */
+.editor_title {
+  padding-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.editor_title > input {
+  padding: 8px 12px;
+  font-size: 18px;
+  color: #000000;
+  width: 100%;
+  outline: none;
+}
+
+/* select category */
+.editor_categories {
+  padding-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.editor_categories > select {
+  padding: 6px 12px;
+  width: 10%;
+  font-size: 16px;
+  outline: none;
+}
+
+/* textarea */
+.editor_text {
+  padding-bottom: 1rem;
+  margin-left: 1rem;
+}
+.editor_text textarea {
+  outline: none;
+  padding: 6px 6px;
+  font-size: 18px;
+  width: 100%;
+}
+
+/* Instructions tab */
+.instructions {
+  width: 40%;
+}
+.instructions__tips--container {
+  background: #f8f9fa;
+  display: flex column;
+}
+
+.instructions__tips--container > p {
+  padding: 8px 6px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+
+.instructions__tips--containerHeader,
+.instructions__tips--containerList {
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+
+.instructions__tips--containerHeader > p,
+.instructions__tips--containerList > p {
+  padding: 8px 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.instructions__tips--containerCode > div > p {
+  padding: 8px 6px;
+}
+
+.instructions__tips--containerCode {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* #9fa5ad */
+/* #f8f9fa */
