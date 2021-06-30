@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./editor.css";
 
+import Preview from "../Preview/Preview";
+
 export default function Editor() {
   const [articleContent, setArticleContent] = useState({
     title: "",
@@ -9,8 +11,8 @@ export default function Editor() {
   });
 
   const [status, setStatus] = useState({
-    editing: true,
-    previewing: false,
+    editing: false,
+    previewing: true,
   });
 
   const categories = [
@@ -71,11 +73,7 @@ export default function Editor() {
         </div>
       </div>
 
-      {status.previewing && (
-        <div>
-          <p>Previewing text</p>
-        </div>
-      )}
+      {status.previewing && <Preview />}
       {status.editing && (
         <div className="container">
           <div className="editor">

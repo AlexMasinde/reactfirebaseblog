@@ -1,0 +1,26 @@
+.preview__container {
+  width: 70%;
+  margin: auto;
+}
+
+.preview__header > h1 {
+  font-weight: 700;
+  font-size: 6rem;
+}
+
+.preview__header > p {
+  font-size: 4rem;
+  padding-top: 5px;
+}
+
+.preview__author > p {
+  font-size: 3rem;
+}
+
+.preview__author {
+  margin-top: 12px;
+}
+
+.preview__text p {
+  font-size: 2rem;
+}
