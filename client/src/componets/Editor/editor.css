@@ -1,6 +1,7 @@
 /* Common styles */
 .editor__header,
-.editor__upload {
+.editor__upload,
+.navigation__buttons {
   display: flex;
 }
 
@@ -8,7 +9,10 @@
 .editor__title > input,
 .editor__text textarea,
 .editor__categories > select,
-.editor__control > button {
+.editor__control > button,
+.navigation__back > p,
+.editor__upload--button,
+.editor__upload--button:hover {
   border: 1px solid rgb(159, 165, 173, 0.2);
 }
 
@@ -19,7 +23,9 @@
 .editor__categories > select,
 .instructions__tips--container,
 .editor__control > button,
-.editor__header > p:hover {
+.navigation__buttons > p:hover,
+.selected,
+.navigation__back > p {
   border-radius: 4px;
 }
 
@@ -42,23 +48,9 @@
   margin-right: 3rem;
   padding-right: 3rem;
   border-right: 1px solid rgb(159, 165, 173, 0.2);
-}
-
-/* editor header styling */
-.editor__header {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid rgb(159, 165, 173, 0.2);
-}
-
-.editor__header > p {
-  padding: 0.8rem 3rem 0.8rem;
-  font-size: 1.6rem;
-  transition: 1s;
-}
-
-.editor__header > p:hover {
-  cursor: pointer;
-  background-color: rgb(159, 165, 173, 0.2);
 }
 
 /* image upload section */
@@ -76,12 +68,18 @@
   display: none;
 }
 
-.editor__upload--button {
-  display: inline-block;
+.editor__upload--button:hover {
   background-color: #000000;
   color: #ffffff;
+}
+
+.editor__upload--button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #000000;
   padding: 6px 12px;
   cursor: pointer;
+  transition: 0.4s;
 }
 
 /* Title input */
@@ -110,7 +108,7 @@
 
 /* textarea */
 .editor__text {
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 }
 .editor__text > textarea {
   outline: none;
@@ -193,37 +191,78 @@
   padding-bottom: 2rem;
 }
 
-/* blog title */
-.navigation__title > p {
-  font-weight: 300;
-  font-size: 2rem;
-}
-
-/* buttons */
+/* editor control buttons */
 .editor__control {
   display: flex;
 }
 
 .editor__control > button {
-  padding: 6px 12px;
+  padding: 6px 15px;
   transition-duration: 0.4s;
   font-size: 1.6rem;
-}
-
-.editor__control > button:hover {
   cursor: pointer;
-  color: red;
-  background-color: yellow;
 }
 
-.editor__control > button:not(:first-child) {
+.editor__control--save,
+.editor__control--discard {
   background-color: #ffffff;
   color: #000000;
   margin-left: 3rem;
 }
 
-.editor__control > button:first-child {
+.editor__control--publish {
+  background-color: #9f6dcf;
+  color: #ffffff;
+}
+
+.editor__control--publish:hover {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.editor__control--save:hover,
+.editor__control--discard:hover {
   background-color: #000000;
   color: #ffffff;
+}
+
+/* navigation */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  border-bottom: 1px solid rgb(159, 165, 173, 0.2);
+}
+
+.navigation .navigation__title > p {
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.navigation__buttons {
+  justify-content: center;
+}
+
+.navigation__buttons > p,
+.navigation__back > p {
+  padding: 0.8rem 3rem;
+  font-size: 1.6rem;
+  transition-duration: 0.2;
+}
+
+.navigation__buttons > p:hover {
   cursor: pointer;
+  background-color: rgba(159, 109, 207, 0.08);
+}
+
+.navigation__back > p:hover {
+  cursor: pointer;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* utility classess */
+.selected {
+  background-color: rgba(159, 109, 207, 0.08);
 }
