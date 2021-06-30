@@ -2,49 +2,95 @@ import React, { useState } from "react";
 import "./editor.css";
 
 function App() {
-  const [category, setCategory] = useState("politics");
-  const categories = ["Technology", "Health", "Technology"];
+  const [articleContent, setArticleContent] = useState({
+    title: "",
+    category: "",
+    content: "",
+  });
 
-  function handleCategory(e) {
-    setCategory(e.target.value);
+  const [status, setStatus] = useState("editing");
+
+  const categories = [
+    "Technology",
+    "Health",
+    "Family",
+    "Politics",
+    "Culture",
+    "Music",
+    "Movies",
+    "Environment",
+    "Business",
+    "Marketing",
+    "Jobs",
+  ];
+
+  function handleArticleTitle(e) {
+    setArticleContent({ ...articleContent, title: e.target.value });
+    console.log(articleContent);
+  }
+
+  function handleArticleCategory(e) {
+    setArticleContent({ ...articleContent, category: e.target.value });
+    console.log(articleContent);
+  }
+
+  function handleArticleText(e) {
+    setArticleContent({ ...articleContent, text: e.target.value });
   }
 
   return (
     <div className="App">
+      <div className="navigation">
+        <div className="navigation__title">
+          <p>Wave Blog</p>
+        </div>
+      </div>
       <div className="container">
         <div className="editor">
-          <div className="editor_header">
+          <div className="editor__header">
             <p>Edit</p>
             <p>Preview</p>
           </div>
-          <div className="editor_upload">
-            <label for="file-upload" className="editor_upload_button">
+          <div className="editor__upload">
+            <label htmlFor="file-upload" className="editor__upload--button">
               <input id="file-upload" type="file" />
               Select File
             </label>
             <p>No file selected...</p>
           </div>
-          <div className="editor_title">
-            <input type="text" placeholder="Title.." />
+          <div className="editor__title">
+            <input
+              type="text"
+              placeholder="Title.."
+              onChange={(e) => handleArticleTitle(e)}
+            />
           </div>
-          <div className="editor_categories">
+          <div className="editor__categories">
             <select
-              className="editor_categories_select"
-              onChange={handleCategory}
+              className="editor__categories--select"
+              onChange={(e) => handleArticleCategory(e)}
             >
-              {categories?.map((category) => {
+              {categories?.map((category, index) => {
                 return (
-                  <option value={category.toLowerCase()}>{category}</option>
+                  <option key={index} value={category.toLowerCase()}>
+                    {category}
+                  </option>
                 );
               })}
             </select>
           </div>
-          <div className="editor_text">
+          <div className="editor__text">
             <textarea
-              placeholder="Your article goes here..."
-              rows="4"
+              placeholder="..."
+              rows="10"
               cols="50"
+              onChange={(e) => handleArticleText(e)}
             ></textarea>
+          </div>
+          <div className="editor__control">
+            <button>Publish</button>
+            <button>Save</button>
+            <button>Discard</button>
           </div>
         </div>
         <div className="instructions">
@@ -57,7 +103,7 @@ function App() {
               when your article is being read
             </p>
           </div>
-          <div className="Instructions__title">
+          <div className="instructions__title">
             <h6>Title</h6>
             <p>
               Add the title of your article. The title can be upto 50 characters
@@ -66,25 +112,24 @@ function App() {
           </div>
           <div className="instructions__tips">
             <h6>Editing Tips</h6>
-            <h7>NB: Use Markdown</h7>
+            <p>NB: Use Markdown</p>
             <div className="instructions__tips--container">
               <div className="instructions__tips--containerHeader">
                 <p>
                   # Header<span>H1 Header</span>
                 </p>
                 <p>
-                  Increase the number of '#' to reduce intensity. E.g. '##
-                  Header' = H2 Header
+                  ## Header<span>H2 Header</span>
                 </p>
               </div>
               <p>
-                *italics*<span>Italics</span>
+                *italics*<span style={{ fontStyle: "italic" }}>Italics</span>
               </p>
               <p>
-                **bold**<span>bold</span>
+                **bold**<span style={{ fontWeight: "700" }}>bold</span>
               </p>
               <p>
-                [Link](https://...)<span>Link</span>
+                [Link](https://...)<span style={{ color: "blue" }}>Link</span>
               </p>
               <div className="instructions__tips--containerList">
                 <p>
@@ -101,7 +146,15 @@ function App() {
                 </p>
               </div>
               <p>
-                &lt; quoted text<span>quoted text</span>
+                &lt; quoted text
+                <span
+                  style={{
+                    borderLeft: "4px solid #9fa5ad",
+                    paddingLeft: "4px",
+                  }}
+                >
+                  quoted text
+                </span>
               </p>
               <p>
                 `inline code`
