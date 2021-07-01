@@ -1,25 +1,42 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./editor.css";
 
 import Preview from "../Preview/Preview";
 
 export default function Editor() {
-  const [articleContent, setArticleContent] = useState({
-    title: "",
-    category: "Select",
-    content: "",
-  });
+  //Access local storage to retrieve saved data
+  function getSavedArticle() {
+    if (localStorage && localStorage.getItem("articleDraft")) {
+      const savedArticle = JSON.parse(localStorage.getItem("articleDraft"));
+      return savedArticle;
+    }
+    return { title: "", category: "", content: "" };
+  }
 
-  const author = {
-    firstName: "Alex",
-    lastName: "Masinde",
-  };
+  const article = getSavedArticle();
+
+  //initialize state
+  const [articleContent, setArticleContent] = useState({
+    title: article.title,
+    category: article.category,
+    content: article.content,
+  });
 
   const [status, setStatus] = useState({
     editing: false,
     previewing: true,
   });
 
+  const [imageUrl, setImageUrl] = useState("");
+
+  //get curent user as author from auth context
+  const author = {
+    firstName: "Alex",
+    lastName: "Masinde",
+  };
+
+  //List of topics to write on
   const categories = [
     "Technology",
     "Health",
@@ -35,6 +52,7 @@ export default function Editor() {
     "Econony",
   ];
 
+  //toggle between Edit and Preview
   function setPreview() {
     setStatus({ editing: false, previewing: true });
     console.log(articleContent);
@@ -45,6 +63,7 @@ export default function Editor() {
     console.log(articleContent);
   }
 
+  //change state
   function handleArticleTitle(e) {
     setArticleContent({ ...articleContent, title: e.target.value });
     console.log(articleContent);
@@ -58,6 +77,54 @@ export default function Editor() {
   function handleArticleText(e) {
     setArticleContent({ ...articleContent, content: e.target.value });
   }
+
+  async function handleArticleFile(e) {
+    console.log(e.target.files[0]);
+    try {
+      let formData = new FormData();
+      const image = e.target.files[0];
+      formData.append("file", image);
+      const result = await axios.post(
+        "http://localhost:5000/api/postuploads",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const secureUrl = result.data;
+      setImageUrl(`![Alt Text](${secureUrl.url})`);
+      console.log(imageUrl);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  //save article draft to local storage
+  function saveAricle() {
+    if (
+      articleContent.title.trim("") !== "" ||
+      articleContent.category.trim("") !== "" ||
+      articleContent.content.trim("") !== ""
+    ) {
+      const articleDraft = JSON.stringify(articleContent);
+      localStorage.setItem("articleDraft", articleDraft);
+    } else {
+      alert("Cannot save empty");
+    }
+  }
+
+  //discard current changes and reset local storage
+  function discardArticle() {
+    localStorage.removeItem("articleDraft");
+    setArticleContent({
+      title: "",
+      category: "",
+      content: "",
+    });
+  }
+
   return (
     <div>
       <div className="navigation">
@@ -89,10 +156,15 @@ export default function Editor() {
           <div className="editor">
             <div className="editor__upload">
               <label htmlFor="file-upload" className="editor__upload--button">
-                <input id="file-upload" type="file" />
+                <input
+                  onChange={(e) => handleArticleFile(e)}
+                  name="file"
+                  id="file-upload"
+                  type="file"
+                />
                 Select File
               </label>
-              <p>No file selected...</p>
+              <p>{imageUrl}</p>
             </div>
             <div className="editor__title">
               <input
@@ -128,8 +200,15 @@ export default function Editor() {
             </div>
             <div className="editor__control">
               <button className="editor__control--publish">Publish</button>
-              <button className="editor__control--save">Save</button>
-              <button className="editor__control--discard">Discard</button>
+              <button onClick={saveAricle} className="editor__control--save">
+                Save
+              </button>
+              <button
+                onClick={discardArticle}
+                className="editor__control--discard"
+              >
+                Discard
+              </button>
             </div>
           </div>
           <div className="instructions">

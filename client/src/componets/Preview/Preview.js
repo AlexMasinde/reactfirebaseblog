@@ -5,7 +5,6 @@ import "./preview.css";
 export default function Preview({ articleContent, author }) {
   const { category, title, content } = articleContent;
   const date = new Date();
-  console.log(content);
   return (
     <div className="preview__container">
       <div className="preview__header">
