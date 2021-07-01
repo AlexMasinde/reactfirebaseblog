@@ -3,6 +3,8 @@ import axios from "axios";
 import "./editor.css";
 
 import Preview from "../Preview/Preview";
+import deleteImages from "../../utils/deleteImages";
+import searchArticle from "../../utils/searchArticle";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -14,7 +16,16 @@ export default function Editor() {
     return { title: "", category: "", content: "" };
   }
 
+  function getSavedImageUrls() {
+    if (localStorage && localStorage.getItem("savedImageUrls")) {
+      const savedImageUrls = localStorage.getItem("savedImageUrls");
+      return savedImageUrls;
+    }
+    return [];
+  }
+
   const article = getSavedArticle();
+  const imageUrls = getSavedImageUrls();
 
   //initialize state
   const [articleContent, setArticleContent] = useState({
@@ -29,6 +40,8 @@ export default function Editor() {
   });
 
   const [imageUrl, setImageUrl] = useState("");
+
+  const [uploadedFiles, setUploadedFiles] = useState(imageUrls);
 
   //get curent user as author from auth context
   const author = {
@@ -93,16 +106,44 @@ export default function Editor() {
           },
         }
       );
-      const secureUrl = result.data;
-      setImageUrl(`![Alt Text](${secureUrl.url})`);
-      console.log(imageUrl);
+      const secureUrl = result.data.url;
+      const publicId = result.data.publicId;
+      setUploadedFiles([
+        ...uploadedFiles,
+        { url: secureUrl, used: true, publicId },
+      ]);
+      setImageUrl(`![Alt Text](${secureUrl})`);
+      console.log(uploadedFiles);
     } catch (err) {
       console.log(err);
     }
   }
 
+  //publish article
+  async function publishArticle() {
+    //search article to find used images
+    const updatedUrls = await searchArticle(
+      uploadedFiles,
+      articleContent.content
+    );
+
+    //proceed to delete unused images
+    const unusedImages = updatedUrls.filter((updatedUrl) => !updatedUrl.used);
+    if (unusedImages.length > 0) {
+      const publicIds = unusedImages.map((unusedImage) => {
+        return unusedImage.publicId;
+      });
+      await deleteImages(publicIds);
+    }
+  }
+
   //save article draft to local storage
-  function saveAricle() {
+  function saveArticle() {
+    if (uploadedFiles.length > 0) {
+      const savedImageUrls = JSON.stringify(uploadedFiles);
+      localStorage.setItem("savedImageUrls", savedImageUrls);
+    }
+
     if (
       articleContent.title.trim("") !== "" ||
       articleContent.category.trim("") !== "" ||
@@ -117,12 +158,18 @@ export default function Editor() {
 
   //discard current changes and reset local storage
   function discardArticle() {
-    localStorage.removeItem("articleDraft");
+    if (localStorage && localStorage.getItem("articleDraft")) {
+      localStorage.removeItem("articleDraft");
+    }
+    if (localStorage && localStorage.getItem("savedImageUrks")) {
+      localStorage.removeItem("savedImageUrls");
+    }
     setArticleContent({
       title: "",
       category: "",
       content: "",
     });
+    setUploadedFiles([]);
   }
 
   return (
@@ -199,8 +246,13 @@ export default function Editor() {
               ></textarea>
             </div>
             <div className="editor__control">
-              <button className="editor__control--publish">Publish</button>
-              <button onClick={saveAricle} className="editor__control--save">
+              <button
+                onClick={publishArticle}
+                className="editor__control--publish"
+              >
+                Publish
+              </button>
+              <button onClick={saveArticle} className="editor__control--save">
                 Save
               </button>
               <button
