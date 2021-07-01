@@ -6,9 +6,14 @@ import Preview from "../Preview/Preview";
 export default function Editor() {
   const [articleContent, setArticleContent] = useState({
     title: "",
-    category: "",
+    category: "Select",
     content: "",
   });
+
+  const author = {
+    firstName: "Alex",
+    lastName: "Masinde",
+  };
 
   const [status, setStatus] = useState({
     editing: false,
@@ -27,14 +32,17 @@ export default function Editor() {
     "Business",
     "Marketing",
     "Jobs",
+    "Econony",
   ];
 
   function setPreview() {
     setStatus({ editing: false, previewing: true });
+    console.log(articleContent);
   }
 
   function setEdit() {
     setStatus({ editing: true, previewing: false });
+    console.log(articleContent);
   }
 
   function handleArticleTitle(e) {
@@ -48,7 +56,7 @@ export default function Editor() {
   }
 
   function handleArticleText(e) {
-    setArticleContent({ ...articleContent, text: e.target.value });
+    setArticleContent({ ...articleContent, content: e.target.value });
   }
   return (
     <div>
@@ -73,7 +81,9 @@ export default function Editor() {
         </div>
       </div>
 
-      {status.previewing && <Preview />}
+      {status.previewing && (
+        <Preview articleContent={articleContent} author={author} />
+      )}
       {status.editing && (
         <div className="container">
           <div className="editor">
@@ -88,11 +98,13 @@ export default function Editor() {
               <input
                 type="text"
                 placeholder="Title.."
+                value={articleContent.title}
                 onChange={(e) => handleArticleTitle(e)}
               />
             </div>
             <div className="editor__categories">
               <select
+                value={articleContent.category}
                 className="editor__categories--select"
                 onChange={(e) => handleArticleCategory(e)}
               >
@@ -108,6 +120,7 @@ export default function Editor() {
             <div className="editor__text">
               <textarea
                 placeholder="..."
+                value={articleContent.content}
                 rows="12"
                 cols="50"
                 onChange={(e) => handleArticleText(e)}

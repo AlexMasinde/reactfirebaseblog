@@ -29,7 +29,7 @@
   border-radius: 4px;
 }
 
-/* text area */
+/* placeholder */
 .editor__text > textarea::placeholder,
 .editor__title > input::placeholder {
   color: #000000;
