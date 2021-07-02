@@ -1,11 +1,14 @@
 export default function validate(title, category, content) {
-    const errors = {}
-    if(category.trim() = '') errors.category = 'Please select a category for your article'
-    if(title.trim() = '') errors.category='Please provide a title for your article'
-    if(content.trim()='') errors.category='Content cannot be empty'
+  let validationErrors = {};
+  if (category.trim() === "")
+    validationErrors.category = "Please select a category for your article";
+  if (title.trim() === "")
+    validationErrors.title = "Please provide a title for your article";
+  if (content.trim() === "")
+    validationErrors.content = "Content cannot be empty";
 
-    return {
-        errors, 
-        valid: Object.keys(errors).length < 1
-    }
+  return {
+    validationErrors,
+    valid: Object.keys(validationErrors).length < 1,
+  };
 }

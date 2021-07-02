@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import "./editor.css";
 
 import Preview from "../Preview/Preview";
 import deleteImages from "../../utils/deleteImages";
 import searchArticle from "../../utils/searchArticle";
+import { database } from "../../firebase";
+import validate from "../../utils/validate";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -18,7 +21,7 @@ export default function Editor() {
 
   function getSavedImageUrls() {
     if (localStorage && localStorage.getItem("savedImageUrls")) {
-      const savedImageUrls = localStorage.getItem("savedImageUrls");
+      const savedImageUrls = JSON.parse(localStorage.getItem("savedImageUrls"));
       return savedImageUrls;
     }
     return [];
@@ -30,6 +33,7 @@ export default function Editor() {
   //initialize state
   const [articleContent, setArticleContent] = useState({
     title: article.title,
+    tagline: article.tagline,
     category: article.category,
     content: article.content,
   });
@@ -42,6 +46,8 @@ export default function Editor() {
   const [imageUrl, setImageUrl] = useState("");
 
   const [uploadedFiles, setUploadedFiles] = useState(imageUrls);
+
+  const [errors, setErrors] = useState([]);
 
   //get curent user as author from auth context
   const author = {
@@ -68,27 +74,32 @@ export default function Editor() {
   //toggle between Edit and Preview
   function setPreview() {
     setStatus({ editing: false, previewing: true });
-    console.log(articleContent);
   }
 
   function setEdit() {
     setStatus({ editing: true, previewing: false });
-    console.log(articleContent);
   }
 
   //change state
   function handleArticleTitle(e) {
     setArticleContent({ ...articleContent, title: e.target.value });
-    console.log(articleContent);
+    if (errors) {
+      errors.title = "";
+    }
   }
 
   function handleArticleCategory(e) {
     setArticleContent({ ...articleContent, category: e.target.value });
-    console.log(articleContent);
+    if (errors) {
+      errors.category = "";
+    }
   }
 
   function handleArticleText(e) {
     setArticleContent({ ...articleContent, content: e.target.value });
+    if (errors) {
+      errors.content = "";
+    }
   }
 
   async function handleArticleFile(e) {
@@ -121,19 +132,43 @@ export default function Editor() {
 
   //publish article
   async function publishArticle() {
-    //search article to find used images
-    const updatedUrls = await searchArticle(
-      uploadedFiles,
-      articleContent.content
-    );
+    const { title, category, content } = articleContent;
+    const { validationErrors, valid } = validate(title, category, content);
+    if (!valid) {
+      console.log(validationErrors);
+      return setErrors(validationErrors);
+    }
 
-    //proceed to delete unused images
-    const unusedImages = updatedUrls.filter((updatedUrl) => !updatedUrl.used);
-    if (unusedImages.length > 0) {
-      const publicIds = unusedImages.map((unusedImage) => {
-        return unusedImage.publicId;
+    try {
+      const articleId = uuid();
+      await database.articles
+        .doc(articleId)
+        .set({ articleId, title, category, content });
+
+      //search article to find used images
+      const updatedUrls = await searchArticle(uploadedFiles, content);
+
+      //proceed to delete unused images
+      const unusedImages = updatedUrls.filter((updatedUrl) => !updatedUrl.used);
+      if (unusedImages.length > 0) {
+        const publicIds = unusedImages.map((unusedImage) => {
+          return unusedImage.publicId;
+        });
+        await deleteImages(publicIds);
+      }
+
+      //delete content from local storage
+      if (localStorage && localStorage.getItem("articleDraft")) {
+        localStorage.removeItem("articleDraft");
+      }
+      if (localStorage && localStorage.getItem("savedImageUrls")) {
+        localStorage.removeItem("savedImageUrls");
+      }
+    } catch (err) {
+      console.log(err);
+      setErrors({
+        message: "Could not publish article! Please try again",
       });
-      await deleteImages(publicIds);
     }
   }
 
@@ -157,13 +192,30 @@ export default function Editor() {
   }
 
   //discard current changes and reset local storage
-  function discardArticle() {
+  async function discardArticle() {
     if (localStorage && localStorage.getItem("articleDraft")) {
       localStorage.removeItem("articleDraft");
     }
-    if (localStorage && localStorage.getItem("savedImageUrks")) {
+
+    if (localStorage && localStorage.getItem("savedImageUrls")) {
+      const savedImageUrls = JSON.parse(localStorage.getItem("savedImageUrls"));
+      console.log(savedImageUrls);
+      const publicIds = savedImageUrls.map((savedImageUrl) => {
+        return savedImageUrl.publicId;
+      });
+      try {
+        await deleteImages(publicIds);
+      } catch {
+        setErrors([
+          {
+            message:
+              "Could not discard! Please check your connection and try again ",
+          },
+        ]);
+      }
       localStorage.removeItem("savedImageUrls");
     }
+
     setArticleContent({
       title: "",
       category: "",
@@ -262,6 +314,13 @@ export default function Editor() {
                 Discard
               </button>
             </div>
+            {errors && (
+              <div>
+                <p>{errors.title}</p>
+                <p>{errors.category}</p>
+                <p>{errors.content}</p>
+              </div>
+            )}
           </div>
           <div className="instructions">
             <div className="instructions__file">
