@@ -1,9 +1,8 @@
 const express = require("express");
 const multer = require("multer");
 const { v4: uuid } = require("uuid");
-const uploadBuffer = require("./uploadBuffer");
+const { uploadBuffer, deleteImages } = require("./handleFiles");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const multipart = require("connect-multiparty");
 
 const upload = multer({ desc: "uploads/" });
@@ -16,20 +15,29 @@ app.use(express.urlencoded({ extended: false }));
 //enabled for development
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
 app.post("/api/postuploads", async (req, res) => {
   try {
     const file = req.files.file;
-    const postId = `blogimages/posts/test`;
+    const postId = `blogimages/posts/${uuid()}`;
     const result = await uploadBuffer(file.path, postId);
     const secureUrl = result.eager[0].secure_url;
-    res.status(201).send({ url: secureUrl });
+    const publicId = result.public_id;
+    console.log(result);
+    res.status(201).send({ url: secureUrl, publicId: publicId });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ uploaded: false, url: "invalid image file" });
+    res.status(500).send({
+      errorMessage: "Could not process your request. Please try again",
+    });
+  }
+});
+
+app.delete("/api/deleteimages", async (req, res) => {
+  const publicIds = req.body.publicIds;
+  try {
+    await deleteImages(publicIds);
+  } catch (err) {
+    console.log(err);
   }
 });
 

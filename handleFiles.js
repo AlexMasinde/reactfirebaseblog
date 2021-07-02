@@ -20,4 +20,8 @@ const uploadBuffer = async (file, publicId) => {
   return upload;
 };
 
-module.exports = uploadBuffer;
+const deleteImages = async (files) => {
+  await cloudinary.api.delete_resources(files);
+};
+
+module.exports = { uploadBuffer, deleteImages };

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { v4 as uuid } from "uuid";
 import "./editor.css";
 
-import Preview from "../Preview/Preview";
-import deleteImages from "../../utils/deleteImages";
-import searchArticle from "../../utils/searchArticle";
 import { database } from "../../firebase";
+
+import Preview from "../Preview/Preview";
+
+import deleteImages from "../../utils/deleteImages";
+import uploadImages from "../../utils/uploadImages";
+import searchArticle from "../../utils/searchArticle";
 import validate from "../../utils/validate";
 
 export default function Editor() {
@@ -102,21 +104,28 @@ export default function Editor() {
     }
   }
 
-  async function handleArticleFile(e) {
-    console.log(e.target.files[0]);
+  function handleArticleTagline(e) {
+    setArticleContent({ ...articleContent, tagline: e.target.value });
+    if (errors) {
+      errors.tagline = "";
+    }
+  }
+
+  async function handleCoverImage(e) {
+    const image = e.target.files[0];
+    const url = "http:://localhost:5000/api/coveruploads";
     try {
-      let formData = new FormData();
-      const image = e.target.files[0];
-      formData.append("file", image);
-      const result = await axios.post(
-        "http://localhost:5000/api/postuploads",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const result = await uploadImages(image, url);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleArticleFile(e) {
+    const image = e.target.files[0];
+    const url = "http://localhost:5000/api/postuploads";
+    try {
+      const result = await uploadImages(image, url);
       const secureUrl = result.data.url;
       const publicId = result.data.publicId;
       setUploadedFiles([
@@ -271,6 +280,14 @@ export default function Editor() {
                 placeholder="Title.."
                 value={articleContent.title}
                 onChange={(e) => handleArticleTitle(e)}
+              />
+            </div>
+            <div className="editor__tagline">
+              <input
+                type="text"
+                placeholder="Title.."
+                value={articleContent.tagline}
+                onChange={(e) => handleArticleTagline(e)}
               />
             </div>
             <div className="editor__categories">
