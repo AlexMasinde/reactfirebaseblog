@@ -20,8 +20,23 @@ const uploadBuffer = async (file, publicId) => {
   return upload;
 };
 
-const deleteImages = async (files) => {
-  await cloudinary.api.delete_resources(files);
+const uploadCoverImages = async (file) => {
+  const result = cloudinary.uploader.upload(file, {
+    responsive_breakpoints: {
+      create_derived: true,
+      min_width: 340,
+      max_width: 800,
+      transformation: { format: "jpg" },
+      max_images: 3,
+    },
+  });
+  return result;
 };
 
-module.exports = { uploadBuffer, deleteImages };
+const deleteImages = async (files) => {
+  await cloudinary.api.delete_resources([
+    "blogimages/posts/d1b996e2-7752-42d2-967f-fdb37739963",
+  ]);
+};
+
+module.exports = { uploadBuffer, deleteImages, uploadCoverImages };

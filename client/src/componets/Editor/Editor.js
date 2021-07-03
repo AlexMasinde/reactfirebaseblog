@@ -6,10 +6,10 @@ import { database } from "../../firebase";
 
 import Preview from "../Preview/Preview";
 
-import deleteImages from "../../utils/deleteImages";
-import uploadImages from "../../utils/uploadImages";
+import { deleteImages, uploadImages } from "../../utils/axiosRequests";
 import searchArticle from "../../utils/searchArticle";
 import validate from "../../utils/validate";
+import { uploadCoverImage } from "../../utils/uploadCoverImage";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -18,7 +18,7 @@ export default function Editor() {
       const savedArticle = JSON.parse(localStorage.getItem("articleDraft"));
       return savedArticle;
     }
-    return { title: "", category: "", content: "" };
+    return { title: "", category: "", content: "", tagline: "" };
   }
 
   function getSavedImageUrls() {
@@ -125,7 +125,7 @@ export default function Editor() {
   async function handleCoverImage(e) {
     const image = e.target.files[0];
     setCoverImage(image);
-    setCoverImageName(image.name);
+    if (image) setCoverImageName(image.name);
   }
 
   async function handleArticleFile(e) {
@@ -158,6 +158,19 @@ export default function Editor() {
     }
 
     try {
+      //upload cover image and get urls after checking if there is an image to upload
+      const coverImages = coverImage
+        ? await uploadCoverImage(coverImage)
+        : {
+            large:
+              "https://res.cloudinary.com/dclqr5vie/image/upload/v1625290832/Placeholder_view_vector_jvbd9m.svg",
+            small:
+              "https://res.cloudinary.com/dclqr5vie/image/upload/v1625290832/Placeholder_view_vector_jvbd9m.svg",
+            medium:
+              "https://res.cloudinary.com/dclqr5vie/image/upload/v1625290832/Placeholder_view_vector_jvbd9m.svg",
+          };
+      console.log(coverImages);
+
       //search article to find used images
       const updatedUrls = await searchArticle(uploadedFiles, content);
 
@@ -170,12 +183,17 @@ export default function Editor() {
         await deleteImages(publicIds);
       }
 
-      //Set article ID,  and save the article to firestore
+      //Set article ID and save the article to firestore
       const usedImages = updatedUrls.filter((updatedUrl) => updatedUrl.used);
       const articleId = uuid();
-      await database.articles
-        .doc(articleId)
-        .set({ articleId, title, category, content, imageUrls: usedImages });
+      await database.articles.doc(articleId).set({
+        articleId,
+        title,
+        category,
+        content,
+        imageUrls: usedImages,
+        coverImages,
+      });
 
       //delete content from local storage
       if (localStorage && localStorage.getItem("articleDraft")) {
@@ -220,7 +238,6 @@ export default function Editor() {
 
     if (localStorage && localStorage.getItem("savedImageUrls")) {
       const savedImageUrls = JSON.parse(localStorage.getItem("savedImageUrls"));
-      console.log(savedImageUrls);
       const publicIds = savedImageUrls.map((savedImageUrl) => {
         return savedImageUrl.publicId;
       });
@@ -229,18 +246,18 @@ export default function Editor() {
       } catch {
         setErrors([
           {
-            message:
+            discard:
               "Could not discard! Please check your connection and try again ",
           },
         ]);
       }
       localStorage.removeItem("savedImageUrls");
     }
-
     setArticleContent({
       title: "",
       category: "",
       content: "",
+      tagline: "",
     });
     setUploadedFiles([]);
   }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function uploadImages(image, url) {
+export async function uploadImages(image, url) {
   let formData = new FormData();
   formData.append("file", image);
   const result = await axios.post(url, formData, {
@@ -9,4 +9,13 @@ export default async function uploadImages(image, url) {
     },
   });
   return result;
+}
+
+export async function deleteImages(publicIds) {
+  const payload = {
+    publicIds,
+  };
+  await axios.delete("http://localhost:5000/api/deleteimages", {
+    data: payload,
+  });
 }

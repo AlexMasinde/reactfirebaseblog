@@ -21,7 +21,6 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase": "^8.6.8",
-    "multer": "^1.4.2",
     "react-markdown": "^6.0.2",
     "streamifier": "^0.1.1",
     "uuid": "^8.3.2"

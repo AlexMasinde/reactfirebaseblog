@@ -1,11 +1,13 @@
 const express = require("express");
-const multer = require("multer");
 const { v4: uuid } = require("uuid");
-const { uploadBuffer, deleteImages } = require("./handleFiles");
 const cors = require("cors");
 const multipart = require("connect-multiparty");
 
-const upload = multer({ desc: "uploads/" });
+const {
+  uploadBuffer,
+  deleteImages,
+  uploadCoverImages,
+} = require("./handleFiles");
 
 const app = express();
 
@@ -31,10 +33,21 @@ app.post("/api/postuploads", async (req, res) => {
   }
 });
 
+app.post("/api/coverupload", async (req, res) => {
+  try {
+    const file = req.files.file;
+    const result = await uploadCoverImages(file.path);
+    res.send(result.responsive_breakpoints[0]);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.delete("/api/deleteimages", async (req, res) => {
   const publicIds = req.body.publicIds;
   try {
-    await deleteImages(publicIds);
+    const result = await deleteImages(publicIds);
+    console.log(result);
   } catch (err) {
     console.log(err);
   }
