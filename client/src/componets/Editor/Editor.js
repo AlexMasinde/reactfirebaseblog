@@ -51,6 +51,12 @@ export default function Editor() {
 
   const [errors, setErrors] = useState([]);
 
+  const [copied, setCopied] = useState(false);
+
+  const [coverImage, setCoverImage] = useState();
+
+  const [coverImageName, setCoverImageName] = useState("Add Cover Image");
+
   //get curent user as author from auth context
   const author = {
     firstName: "Alex",
@@ -59,6 +65,7 @@ export default function Editor() {
 
   //List of topics to write on
   const categories = [
+    "Select Category",
     "Technology",
     "Health",
     "Family",
@@ -91,7 +98,11 @@ export default function Editor() {
   }
 
   function handleArticleCategory(e) {
-    setArticleContent({ ...articleContent, category: e.target.value });
+    const category = e.target.value;
+    setArticleContent({
+      ...articleContent,
+      category: category === "select category" ? "" : category,
+    });
     if (errors) {
       errors.category = "";
     }
@@ -113,16 +124,13 @@ export default function Editor() {
 
   async function handleCoverImage(e) {
     const image = e.target.files[0];
-    const url = "http:://localhost:5000/api/coveruploads";
-    try {
-      const result = await uploadImages(image, url);
-    } catch (err) {
-      console.log(err);
-    }
+    setCoverImage(image);
+    setCoverImageName(image.name);
   }
 
   async function handleArticleFile(e) {
     const image = e.target.files[0];
+    console.log(image);
     const url = "http://localhost:5000/api/postuploads";
     try {
       const result = await uploadImages(image, url);
@@ -143,17 +151,13 @@ export default function Editor() {
   async function publishArticle() {
     const { title, category, content } = articleContent;
     const { validationErrors, valid } = validate(title, category, content);
+
     if (!valid) {
       console.log(validationErrors);
       return setErrors(validationErrors);
     }
 
     try {
-      const articleId = uuid();
-      await database.articles
-        .doc(articleId)
-        .set({ articleId, title, category, content });
-
       //search article to find used images
       const updatedUrls = await searchArticle(uploadedFiles, content);
 
@@ -165,6 +169,13 @@ export default function Editor() {
         });
         await deleteImages(publicIds);
       }
+
+      //Set article ID,  and save the article to firestore
+      const usedImages = updatedUrls.filter((updatedUrl) => updatedUrl.used);
+      const articleId = uuid();
+      await database.articles
+        .doc(articleId)
+        .set({ articleId, title, category, content, imageUrls: usedImages });
 
       //delete content from local storage
       if (localStorage && localStorage.getItem("articleDraft")) {
@@ -189,9 +200,10 @@ export default function Editor() {
     }
 
     if (
-      articleContent.title.trim("") !== "" ||
-      articleContent.category.trim("") !== "" ||
-      articleContent.content.trim("") !== ""
+      articleContent.title.trim() !== "" ||
+      articleContent.category.trim() !== "" ||
+      articleContent.content.trim() !== "" ||
+      articleContent.tagline.trim() !== ""
     ) {
       const articleDraft = JSON.stringify(articleContent);
       localStorage.setItem("articleDraft", articleDraft);
@@ -233,6 +245,11 @@ export default function Editor() {
     setUploadedFiles([]);
   }
 
+  function copyLink() {
+    navigator.clipboard.writeText(imageUrl);
+    setCopied(true);
+  }
+
   return (
     <div>
       <div className="navigation">
@@ -263,16 +280,39 @@ export default function Editor() {
         <div className="container">
           <div className="editor">
             <div className="editor__upload">
-              <label htmlFor="file-upload" className="editor__upload--button">
+              <label htmlFor="cover-image" className="editor__upload--button">
                 <input
-                  onChange={(e) => handleArticleFile(e)}
-                  name="file"
-                  id="file-upload"
+                  onChange={(e) => handleCoverImage(e)}
+                  name="coverimage"
+                  id="cover-image"
                   type="file"
                 />
-                Select File
+                {coverImageName}
               </label>
-              <p>{imageUrl}</p>
+              <div className="editor__upload-articleFile">
+                <label
+                  htmlFor="article-image"
+                  className="editor__upload--button"
+                >
+                  <input
+                    onChange={(e) => handleArticleFile(e)}
+                    name="articleimage"
+                    id="article-image"
+                    type="file"
+                  />
+                  Select File
+                </label>
+                {imageUrl && (
+                  <div>
+                    <div className="editor__upload-link">
+                      <p>{imageUrl}</p>
+                    </div>
+                    <div onClick={copyLink} className="editor__upload-copy">
+                      <p>{copied ? "Copied" : "Copy"}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="editor__title">
               <input
@@ -285,7 +325,7 @@ export default function Editor() {
             <div className="editor__tagline">
               <input
                 type="text"
-                placeholder="Title.."
+                placeholder="A short, but concise overview of your article..."
                 value={articleContent.tagline}
                 onChange={(e) => handleArticleTagline(e)}
               />
@@ -336,6 +376,7 @@ export default function Editor() {
                 <p>{errors.title}</p>
                 <p>{errors.category}</p>
                 <p>{errors.content}</p>
+                <p>{errors.tagline}</p>
               </div>
             )}
           </div>

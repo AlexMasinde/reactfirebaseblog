@@ -22,7 +22,6 @@ app.post("/api/postuploads", async (req, res) => {
     const result = await uploadBuffer(file.path, postId);
     const secureUrl = result.eager[0].secure_url;
     const publicId = result.public_id;
-    console.log(result);
     res.status(201).send({ url: secureUrl, publicId: publicId });
   } catch (err) {
     console.log(err);

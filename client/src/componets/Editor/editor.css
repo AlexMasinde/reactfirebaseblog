@@ -1,23 +1,33 @@
 /* Common styles */
 .editor__header,
 .editor__upload,
-.navigation__buttons {
+.navigation__buttons,
+.editor__upload-articleFile {
   display: flex;
+}
+
+/* Text align */
+.editor__upload-articleFile > label,
+.editor__upload > label {
+  text-align: center;
 }
 
 /* border */
 .editor__title > input,
+.editor__tagline > input,
 .editor__text textarea,
 .editor__categories > select,
 .editor__control > button,
 .navigation__back > p,
 .editor__upload--button,
-.editor__upload--button:hover {
+.editor__upload--button:hover,
+.editor__upload-articleFile > div {
   border: 1px solid rgb(159, 165, 173, 0.2);
 }
 
 /* border radius */
 .editor__title > input,
+.editor__tagline > input,
 .editor__text > textarea,
 .editor__upload--button,
 .editor__categories > select,
@@ -25,15 +35,16 @@
 .editor__control > button,
 .navigation__buttons > p:hover,
 .selected,
-.navigation__back > p {
+.navigation__back > p,
+.editor__upload-articleFile > div {
   border-radius: 4px;
 }
 
 /* placeholder */
-.editor__text > textarea::placeholder,
-.editor__title > input::placeholder {
-  color: #000000;
-}
+/* .editor__text > textarea::placeholder,
+.editor__title > input::placeholder,
+.editor__tagline > input::placeholder {
+} */
 
 /*container */
 .container {
@@ -55,14 +66,62 @@
 
 /* image upload section */
 .editor__upload {
-  justify-content: flex-start;
-  align-items: center;
-  padding: 3rem 0;
+  flex-direction: column;
   font-size: 1.6rem;
 }
 
-.editor__upload > p {
-  margin-left: 1rem;
+.editor__upload > label {
+  background-color: #9f6dc9;
+  color: #ffffff;
+}
+
+.editor__upload-articleFile {
+  flex-direction: column;
+  padding: 3rem 0;
+}
+
+.editor__upload-articleFile > div {
+  display: flex;
+  margin-top: 1.2rem;
+  color: grey;
+}
+
+.editor__upload-link {
+  width: 80%;
+  padding: 3px;
+}
+
+.editor__upload-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  background-color: #9f6dcf;
+  border-radius: 0 4px 4px 0;
+  color: white;
+  transition-duration: 0.4s;
+}
+
+.editor__upload-copy:hover {
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.editor__upload-link > p {
+  font-size: 1.2rem;
+  padding: 3px;
+}
+
+.editor__upload-copy > p {
+  margin: auto 0;
+  font-size: 1.6rem;
+}
+
+.editor__upload-articleFile > label {
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
 }
 .editor__upload--button > input {
   display: none;
@@ -75,21 +134,21 @@
 
 .editor__upload--button {
   display: inline-block;
-  background-color: #ffffff;
-  color: #000000;
   padding: 6px 12px;
   cursor: pointer;
   transition: 0.4s;
 }
 
 /* Title input */
-.editor__title {
+.editor__title,
+.editor__tagline {
   padding-bottom: 3rem;
 }
 
-.editor__title > input {
+.editor__title > input,
+.editor__tagline > input {
   padding: 8px 12px;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #000000;
   width: 100%;
   outline: none;
@@ -104,6 +163,10 @@
   padding: 6px 12px;
   font-size: 1.6rem;
   outline: none;
+}
+
+.editor__categories > select::placeholder {
+  color: grey;
 }
 
 /* textarea */
