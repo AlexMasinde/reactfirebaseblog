@@ -271,7 +271,7 @@ export default function Editor() {
     <div>
       <div className="navigation">
         <div className="navigation__title">
-          <p>Wave Blog</p>
+          <p>IB</p>
         </div>
         <div className="navigation__buttons">
           <p className={status.editing ? "selected" : ""} onClick={setEdit}>
