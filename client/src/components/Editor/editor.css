@@ -12,6 +12,10 @@
   text-align: center;
 }
 
+.editor__upload-articleFile > label {
+  position: relative;
+}
+
 /* border */
 .editor__title > input,
 .editor__tagline > input,
@@ -271,6 +275,7 @@
 }
 
 .editor__control > button {
+  position: relative;
   padding: 6px 15px;
   transition-duration: 0.4s;
   font-size: 1.6rem;

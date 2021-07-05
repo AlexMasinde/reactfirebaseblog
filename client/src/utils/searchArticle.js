@@ -1,8 +1,7 @@
 export default function searchArticle(uploadedFiles, articleContent) {
   return new Promise(function (resolve, reject) {
-    const article = articleContent.content;
     const files = uploadedFiles.map((uploadedFile) => {
-      const used = article.search(uploadedFile.url);
+      const used = articleContent.search(uploadedFile.url);
       if (used === -1) {
         const unuploaded = {
           url: uploadedFile.url,

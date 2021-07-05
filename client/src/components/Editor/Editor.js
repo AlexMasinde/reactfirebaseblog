@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import "./editor.css";
 
@@ -10,6 +10,7 @@ import { deleteImages, uploadImages } from "../../utils/axiosRequests";
 import searchArticle from "../../utils/searchArticle";
 import validate from "../../utils/validate";
 import { uploadCoverImage } from "../../utils/uploadCoverImage";
+import { useHistory } from "react-router-dom";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -24,13 +25,14 @@ export default function Editor() {
   function getSavedImageUrls() {
     if (localStorage && localStorage.getItem("savedImageUrls")) {
       const savedImageUrls = JSON.parse(localStorage.getItem("savedImageUrls"));
+      console.log(savedImageUrls);
       return savedImageUrls;
     }
     return [];
   }
 
   const article = getSavedArticle();
-  const imageUrls = getSavedImageUrls();
+  const uploadedFiles = getSavedImageUrls();
 
   //initialize state
   const [articleContent, setArticleContent] = useState({
@@ -47,7 +49,7 @@ export default function Editor() {
 
   const [imageUrl, setImageUrl] = useState("");
 
-  const [uploadedFiles, setUploadedFiles] = useState(imageUrls);
+  const uploadsReference = useRef(uploadedFiles);
 
   const [errors, setErrors] = useState([]);
 
@@ -62,6 +64,9 @@ export default function Editor() {
     publish: false,
     discard: false,
   });
+
+  //history
+  const history = useHistory();
 
   //get curent user as author from auth context
   const author = {
@@ -139,18 +144,21 @@ export default function Editor() {
     const url = "/api/postuploads";
     try {
       setLoading({ ...loading, upload: true });
+      console.log(loading.upload);
       const result = await uploadImages(image, url);
       const secureUrl = result.data.url;
       const publicId = result.data.publicId;
       console.log({ secureUrl, publicId });
+
       const newUpload = {
         url: secureUrl,
         used: true,
         publicId: publicId,
       };
-      setUploadedFiles([...uploadedFiles, newUpload]);
+
+      uploadsReference.current = [...uploadsReference.current, newUpload];
       setImageUrl(`![Alt Text](${secureUrl})`);
-      console.log(uploadedFiles);
+      console.log(uploadsReference.current);
       setLoading({ ...loading, upload: false });
     } catch (err) {
       setLoading({ ...loading, upload: false });
@@ -189,7 +197,10 @@ export default function Editor() {
           };
 
       //search article to find used images
-      const updatedUrls = await searchArticle(uploadedFiles, content);
+      const updatedUrls = await searchArticle(
+        uploadsReference.current,
+        content
+      );
 
       //proceed to delete unused images
       const unusedImages = updatedUrls.filter((updatedUrl) => !updatedUrl.used);
@@ -221,6 +232,7 @@ export default function Editor() {
       }
 
       setLoading({ ...loading, publish: false });
+      history.push("/");
     } catch (err) {
       setLoading({ ...loading, publish: false });
       console.log(err);
@@ -233,8 +245,9 @@ export default function Editor() {
 
   //save article draft to local storage
   function saveArticle() {
-    if (uploadedFiles.length > 0) {
-      const savedImageUrls = JSON.stringify(uploadedFiles);
+    const uploads = uploadsReference.current;
+    if (uploads.length > 0) {
+      const savedImageUrls = JSON.stringify(uploads);
       localStorage.setItem("savedImageUrls", savedImageUrls);
     }
 
@@ -277,7 +290,7 @@ export default function Editor() {
         content: "",
         tagline: "",
       });
-      setUploadedFiles([]);
+      uploadsReference.current = [];
       setLoading({ ...loading, discard: false });
     } catch (err) {
       setLoading({ ...loading, discard: false });
