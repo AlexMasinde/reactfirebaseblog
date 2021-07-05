@@ -41,8 +41,8 @@ export default function Editor() {
   });
 
   const [status, setStatus] = useState({
-    editing: false,
-    previewing: true,
+    editing: true,
+    previewing: false,
   });
 
   const [imageUrl, setImageUrl] = useState("");
@@ -269,7 +269,7 @@ export default function Editor() {
 
   return (
     <div>
-      <div className="navigation">
+      <div id="top" className="navigation">
         <div className="navigation__title">
           <p>IB</p>
         </div>
@@ -289,13 +289,13 @@ export default function Editor() {
           <p>Back</p>
         </div>
       </div>
-
       {status.previewing && (
         <Preview articleContent={articleContent} author={author} />
       )}
       {status.editing && (
         <div className="container">
           <div className="editor">
+            <a href="#editing-instructions">Editing Instructions</a>
             <div className="editor__upload">
               <label htmlFor="cover-image" className="editor__upload--button">
                 <input
@@ -317,7 +317,7 @@ export default function Editor() {
                     id="article-image"
                     type="file"
                   />
-                  Select File
+                  Select Article Images
                 </label>
                 {imageUrl && (
                   <div>
@@ -397,14 +397,13 @@ export default function Editor() {
               </div>
             )}
           </div>
-          <div className="instructions">
+          <div id="editing-instructions" className="instructions">
             <div className="instructions__file">
-              <h6>Image</h6>
+              <h6>Article Images</h6>
               <p>
                 Select an image then paste the generated link to the section of
-                the article where you would like the image to be palced. Make
-                sure to edit 'Alt Text' to describe your image in case it fails
-                to load when your article is being read
+                the article where you would like the image to be placed. Add
+                **text** below the link to include a caption.
               </p>
             </div>
             <div className="instructions__title">
@@ -487,6 +486,7 @@ export default function Editor() {
               </div>
             </div>
           </div>
+          <a href="#top">Back to top</a>
         </div>
       )}
     </div>

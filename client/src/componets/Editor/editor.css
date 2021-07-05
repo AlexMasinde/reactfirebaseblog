@@ -56,12 +56,12 @@
 /* Editor styling */
 .editor {
   flex: 2 1 0;
-  margin-right: 3rem;
+  margin: 0 3rem 0 0;
   padding-right: 3rem;
   border-right: 1px solid rgb(159, 165, 173, 0.2);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* image upload section */
@@ -71,7 +71,7 @@
 }
 
 .editor__upload > label {
-  background-color: #9f6dc9;
+  background-color: #000000;
   color: #ffffff;
 }
 
@@ -274,7 +274,7 @@
 }
 
 .editor__control--publish {
-  background-color: #9f6dcf;
+  background-color: #000000;
   color: #ffffff;
 }
 
@@ -300,8 +300,11 @@
 }
 
 .navigation .navigation__title > p {
-  font-weight: 300;
+  padding: 0px 3px;
+  font-weight: 700;
   font-size: 2rem;
+  border-top: 2px solid rgb(159, 165, 173, 0.2);
+  border-bottom: 2px solid rgb(159, 165, 173, 0.2);
 }
 
 .navigation__buttons {
@@ -326,7 +329,171 @@
   color: #ffffff;
 }
 
-/* utility classess */
+/* utility styles */
 .selected {
   background-color: rgba(159, 109, 207, 0.08);
+}
+
+a {
+  display: none;
+}
+
+a:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Media query */
+
+@media (min-width: 0px) and (max-width: 576px) {
+  .navigation {
+    width: 95%;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgba(159, 109, 207, 0.08);
+    color: #000000;
+    padding: 2px 8px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .navigation__buttons > p,
+  .navigation__back > p {
+    padding: 0.8rem 1rem;
+    font-size: 1.2rem;
+    transition-duration: 0.2;
+  }
+
+  .container {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .editor {
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    width: 95%;
+  }
+
+  .editor__text > textarea {
+    height: 18rem;
+  }
+
+  .instructions {
+    margin: 1.5rem auto 0;
+    width: 95%;
+  }
+
+  .instructions__file > p,
+  .instructions__tips > p,
+  .instructions__title > p {
+    padding: 6px 0px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+  }
+  .instructions__file > h6,
+  .instructions__title > h6,
+  .instructions__tips > h6 {
+    padding: 12px 0px;
+  }
+}
+
+/* Medium */
+
+@media (min-width: 577px) and (max-width: 992px) {
+  .navigation {
+    width: 95%;
+  }
+  a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgba(159, 109, 207, 0.08);
+    color: #000000;
+    padding: 2px 8px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .container {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .editor {
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    width: 95%;
+  }
+
+  .instructions {
+    margin: 1.5rem auto 0;
+    width: 95%;
+  }
+
+  .instructions__file > p,
+  .instructions__tips > p,
+  .instructions__title > p {
+    padding: 6px 0px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+  }
+  .instructions__file > h6,
+  .instructions__title > h6,
+  .instructions__tips > h6 {
+    padding: 6px 0px;
+  }
+}
+
+/* Large */
+@media (min-width: 769px) and (max-width: 992px) {
+  .navigation {
+    width: 95%;
+  }
+
+  .container {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .editor {
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    width: 95%;
+  }
+
+  .instructions {
+    margin: 1.5rem auto 0;
+    width: 95%;
+  }
+
+  .instructions__file > p,
+  .instructions__tips > p,
+  .instructions__title > p {
+    padding: 6px 0px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+  }
+  .instructions__file > h6,
+  .instructions__title > h6,
+  .instructions__tips > h6 {
+    padding: 6px 0px;
+  }
+}
+
+/* Extra large */
+@media (min-width: 993px) and (max-width: 1400px) {
+  .navigation {
+    width: 95%;
+  }
+  .container {
+    width: 95%;
+  }
 }

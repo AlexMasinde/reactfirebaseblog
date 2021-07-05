@@ -1,9 +1,9 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown"s;
 import "./preview.css";
 
 export default function Preview({ articleContent, author }) {
-  const { category, title, content } = articleContent;
+  // const { category, title, content } = articleContent;
   const date = new Date();
   return (
     <div className="preview__container">
