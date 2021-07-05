@@ -15,7 +15,7 @@ export async function deleteImages(publicIds) {
   const payload = {
     publicIds,
   };
-  await axios.delete("http://localhost:5000/api/deleteimages", {
+  await axios.delete("/api/deleteimages", {
     data: payload,
   });
 }

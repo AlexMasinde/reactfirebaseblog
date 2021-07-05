@@ -57,6 +57,12 @@ export default function Editor() {
 
   const [coverImageName, setCoverImageName] = useState("Add Cover Image");
 
+  const [loading, setLoading] = useState({
+    upload: false,
+    publish: false,
+    discard: false,
+  });
+
   //get curent user as author from auth context
   const author = {
     firstName: "Alex",
@@ -130,20 +136,29 @@ export default function Editor() {
 
   async function handleArticleFile(e) {
     const image = e.target.files[0];
-    console.log(image);
-    const url = "http://localhost:5000/api/postuploads";
+    const url = "/api/postuploads";
     try {
+      setLoading({ ...loading, upload: true });
       const result = await uploadImages(image, url);
       const secureUrl = result.data.url;
       const publicId = result.data.publicId;
-      setUploadedFiles([
-        ...uploadedFiles,
-        { url: secureUrl, used: true, publicId },
-      ]);
+      console.log({ secureUrl, publicId });
+      const newUpload = {
+        url: secureUrl,
+        used: true,
+        publicId: publicId,
+      };
+      setUploadedFiles([...uploadedFiles, newUpload]);
       setImageUrl(`![Alt Text](${secureUrl})`);
       console.log(uploadedFiles);
+      setLoading({ ...loading, upload: false });
     } catch (err) {
+      setLoading({ ...loading, upload: false });
       console.log(err);
+      setErrors({
+        ...errors,
+        articleImage: "Could not upload image. Please try again",
+      });
     }
   }
 
@@ -152,12 +167,15 @@ export default function Editor() {
     const { title, category, content } = articleContent;
     const { validationErrors, valid } = validate(title, category, content);
 
+    setLoading({ ...loading, publish: true });
     if (!valid) {
       console.log(validationErrors);
+      setLoading({ ...loading, publish: false });
       return setErrors(validationErrors);
     }
 
     try {
+      setLoading({ ...loading, publish: true });
       //upload cover image and get urls after checking if there is an image to upload
       const coverImages = coverImage
         ? await uploadCoverImage(coverImage)
@@ -169,7 +187,6 @@ export default function Editor() {
             medium:
               "https://res.cloudinary.com/dclqr5vie/image/upload/v1625290832/Placeholder_view_vector_jvbd9m.svg",
           };
-      console.log(coverImages);
 
       //search article to find used images
       const updatedUrls = await searchArticle(uploadedFiles, content);
@@ -202,10 +219,14 @@ export default function Editor() {
       if (localStorage && localStorage.getItem("savedImageUrls")) {
         localStorage.removeItem("savedImageUrls");
       }
+
+      setLoading({ ...loading, publish: false });
     } catch (err) {
+      setLoading({ ...loading, publish: false });
       console.log(err);
       setErrors({
-        message: "Could not publish article! Please try again",
+        ...errors,
+        publishArticle: "Something went wrong! Could not publish article",
       });
     }
   }
@@ -226,45 +247,51 @@ export default function Editor() {
       const articleDraft = JSON.stringify(articleContent);
       localStorage.setItem("articleDraft", articleDraft);
     } else {
-      alert("Cannot save empty");
+      setErrors({ ...errors, saveArticle: "Details empty. Nothing to save" });
     }
   }
 
   //discard current changes and reset local storage
   async function discardArticle() {
-    if (localStorage && localStorage.getItem("articleDraft")) {
-      localStorage.removeItem("articleDraft");
-    }
-
-    if (localStorage && localStorage.getItem("savedImageUrls")) {
-      const savedImageUrls = JSON.parse(localStorage.getItem("savedImageUrls"));
-      const publicIds = savedImageUrls.map((savedImageUrl) => {
-        return savedImageUrl.publicId;
-      });
-      try {
-        await deleteImages(publicIds);
-      } catch {
-        setErrors([
-          {
-            discard:
-              "Could not discard! Please check your connection and try again ",
-          },
-        ]);
+    try {
+      setLoading({ ...loading, discard: true });
+      if (localStorage && localStorage.getItem("articleDraft")) {
+        localStorage.removeItem("articleDraft");
       }
-      localStorage.removeItem("savedImageUrls");
+
+      if (localStorage && localStorage.getItem("savedImageUrls")) {
+        const savedImageUrls = JSON.parse(
+          localStorage.getItem("savedImageUrls")
+        );
+        const publicIds = savedImageUrls.map((savedImageUrl) => {
+          return savedImageUrl.publicId;
+        });
+
+        await deleteImages(publicIds);
+
+        localStorage.removeItem("savedImageUrls");
+      }
+      setArticleContent({
+        title: "",
+        category: "",
+        content: "",
+        tagline: "",
+      });
+      setUploadedFiles([]);
+      setLoading({ ...loading, discard: false });
+    } catch (err) {
+      setLoading({ ...loading, discard: false });
+      console.log(err);
+      setErrors({
+        ...errors,
+        discardArticle: "Could not discard article. Check your connection",
+      });
     }
-    setArticleContent({
-      title: "",
-      category: "",
-      content: "",
-      tagline: "",
-    });
-    setUploadedFiles([]);
   }
 
   function copyLink() {
     navigator.clipboard.writeText(imageUrl);
-    setCopied(true);
+    setCopied(!copied);
   }
 
   return (
@@ -309,15 +336,20 @@ export default function Editor() {
               <div className="editor__upload-articleFile">
                 <label
                   htmlFor="article-image"
-                  className="editor__upload--button"
+                  className={`editor__upload--button ${
+                    loading.upload ? "button__loading" : ""
+                  }`}
                 >
                   <input
                     onChange={(e) => handleArticleFile(e)}
                     name="articleimage"
                     id="article-image"
                     type="file"
+                    disabled={loading.upload}
                   />
-                  Select Article Images
+                  <span className={loading.upload ? "loading__text" : ""}>
+                    Select Article Images
+                  </span>
                 </label>
                 {imageUrl && (
                   <div>
@@ -374,26 +406,35 @@ export default function Editor() {
             <div className="editor__control">
               <button
                 onClick={publishArticle}
-                className="editor__control--publish"
+                disabled={loading.publish}
+                className={`editor__control--publish ${
+                  loading.publish ? "button__loading" : ""
+                }`}
               >
-                Publish
+                <span className={loading.publish ? "loading__text" : ""}>
+                  Publish
+                </span>
               </button>
               <button onClick={saveArticle} className="editor__control--save">
                 Save
               </button>
               <button
                 onClick={discardArticle}
-                className="editor__control--discard"
+                disabled={loading.discard}
+                className={`editor__control--discard ${
+                  loading.discard ? "button__loading" : ""
+                }`}
               >
-                Discard
+                <span className={loading.discard ? "loading__text" : ""}>
+                  Discard
+                </span>
               </button>
             </div>
             {errors && (
-              <div>
-                <p>{errors.title}</p>
-                <p>{errors.category}</p>
-                <p>{errors.content}</p>
-                <p>{errors.tagline}</p>
+              <div className="editor__errors">
+                {Object.keys(errors).map((error) => {
+                  return <p>{errors[error]}</p>;
+                })}
               </div>
             )}
           </div>
