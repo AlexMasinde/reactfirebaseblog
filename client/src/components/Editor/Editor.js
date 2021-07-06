@@ -158,7 +158,7 @@ export default function Editor() {
 
       uploadsReference.current = [...uploadsReference.current, newUpload];
       setImageUrl(`![Alt Text](${secureUrl})`);
-      console.log(uploadsReference.current);
+      setCopied(false);
       setLoading({ ...loading, upload: false });
     } catch (err) {
       setLoading({ ...loading, upload: false });

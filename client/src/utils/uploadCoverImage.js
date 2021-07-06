@@ -1,7 +1,7 @@
 import { uploadImages } from "./axiosRequests";
 
 export async function uploadCoverImage(coverImage) {
-  const url = "http://localhost:5000/api/coverupload";
+  const url = "/api/coverupload";
   const payload = await uploadImages(coverImage, url);
   const breakpoints = payload.data.breakpoints;
   const widths = breakpoints.map((breakpoint) => {
