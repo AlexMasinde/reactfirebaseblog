@@ -221,6 +221,7 @@ export default function Editor() {
         content,
         imageUrls: usedImages,
         coverImages,
+        createdAt: database.timeStamp,
       });
 
       //delete content from local storage

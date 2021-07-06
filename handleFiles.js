@@ -33,10 +33,8 @@ const uploadCoverImages = async (file) => {
   return result;
 };
 
-const deleteImages = async (files) => {
-  await cloudinary.api.delete_resources([
-    "blogimages/posts/d1b996e2-7752-42d2-967f-fdb37739963",
-  ]);
+const deleteImages = async (publicIds) => {
+  await cloudinary.api.delete_resources([publicIds]);
 };
 
 module.exports = { uploadBuffer, deleteImages, uploadCoverImages };

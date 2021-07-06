@@ -1,0 +1,8 @@
+.latestArticles__container {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(159, 165, 173, 0.1);
+  justify-content: space-around;
+  margin: auto;
+  width: 70%;
+}

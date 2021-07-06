@@ -1,0 +1,29 @@
+.thumbnail__container {
+  margin-top: 1rem;
+  width: 300px;
+  background-color: #fff;
+}
+
+.thumbnail__container-text {
+  height: 40%;
+  padding: 1.5rem;
+}
+
+.thumbnail__container-text > p {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  color: grey;
+}
+
+.thumbnail__container-text > h2 {
+  margin-top: 1rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.thumbnail__container > img {
+  height: 210px;
+  width: 280px;
+  display: block;
+  margin: 1rem auto 0;
+}
