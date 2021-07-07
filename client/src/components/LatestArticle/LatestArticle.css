@@ -1,0 +1,39 @@
+.latestArticle__container {
+  display: flex;
+}
+
+/* Text */
+.latestArticle__container-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.latestArticle__container-text > h6 {
+  font-weight: 400;
+  width: fit-content;
+  font-size: 1.2rem;
+}
+
+.latestArticle__container-text > h1 {
+  font-size: 4rem;
+  line-height: 4rem;
+  margin: 0.8rem 0;
+}
+
+.latestArticle__container-text > p {
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+/* Image */
+.latestArticle__container-img {
+  height: auto;
+}
+
+.latestArticle__container-img > img {
+  display: inline-block;
+  height: 400px;
+  width: 530px;
+}

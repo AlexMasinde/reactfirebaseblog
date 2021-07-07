@@ -1,0 +1,14 @@
+.homepage__hero {
+  display: flex;
+  width: 60%;
+  margin: auto;
+}
+
+.homepage__latestArticles {
+  width: 90%;
+}
+
+.homepage__sidebarContainer {
+  margin-left: 3rem;
+  width: 20%;
+}

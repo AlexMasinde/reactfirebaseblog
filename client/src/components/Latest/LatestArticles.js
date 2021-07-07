@@ -32,10 +32,14 @@ export default function LatestArticles() {
 
   return (
     <section className="latestArticles__container">
-      <LatestArticle latestArticle={latestArticle} />
-      {articles.map((article, index) => {
-        return <ArticleThumbnail key={index} article={article} />;
-      })}
+      <div className="latestArticles__container-latest">
+        <LatestArticle latestArticle={latestArticle} />
+      </div>
+      <div className="latestArticles__container-articles">
+        {articles.map((article, index) => {
+          return <ArticleThumbnail key={index} article={article} />;
+        })}
+      </div>
     </section>
   );
 }

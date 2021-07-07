@@ -1,0 +1,72 @@
+.homepage__sidebar {
+  background-color: #ffffff;
+}
+
+.homepage__sidebar-join {
+  margin-bottom: 4rem;
+  border-bottom: 1px solid #000000;
+}
+
+.homepage__sidebar-join > p {
+  line-height: 2rem;
+  font-weight: 300;
+  margin-top: 1rem;
+}
+.homepage__sidebar-join > h2 {
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0.5rem;
+}
+
+.homepage__sidebar-join > button {
+  display: block;
+  font-size: 1.2rem;
+  padding: 4px 12px;
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  margin: 1rem auto 1rem;
+  transition: 1s;
+}
+
+.homepage__sidebar-join > button:hover {
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.homepage__sidebar-follow > h2,
+.homepage__sidebar-join > h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.homepage__sidebar-follow h2 {
+  margin-bottom: 1rem;
+}
+
+.homepage__sidebar-follow > a {
+  display: block;
+  text-decoration: none;
+}
+
+.homepage__sidebar-follow {
+  margin-top: 2rem;
+}
+
+.homepage__sidebar-follow > a > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dotted #000000;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.homepage__sidebar-follow > a > div > img {
+  width: 20px;
+}
+
+.homepage__sidebar-follow > a > div > p,
+.homepage__sidebar-join > p {
+  color: #000000;
+  font-size: 1.3rem;
+}

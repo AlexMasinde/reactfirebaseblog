@@ -172,7 +172,7 @@ export default function Editor() {
 
   //publish article
   async function publishArticle() {
-    const { title, category, content } = articleContent;
+    const { title, category, tagline, content } = articleContent;
     const { validationErrors, valid } = validate(title, category, content);
 
     setLoading({ ...loading, publish: true });
@@ -218,6 +218,7 @@ export default function Editor() {
         articleId,
         title,
         category,
+        tagline,
         content,
         imageUrls: usedImages,
         coverImages,
