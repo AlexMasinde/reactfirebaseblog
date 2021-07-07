@@ -1,0 +1,20 @@
+.navigation__categories {
+  display: flex;
+  width: 70%;
+  justify-content: space-around;
+  margin: 0 auto 3rem;
+}
+
+.navigation__categories > p {
+  padding: 3px 10px;
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: 0.2s;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px;
+}
+
+.navigation__categories > p:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}

@@ -1,16 +1,18 @@
 import React, { useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { useHistory } from "react-router-dom";
+
 import "./editor.css";
 
 import { database } from "../../firebase";
-
-import Preview from "../Preview/Preview";
 
 import { deleteImages, uploadImages } from "../../utils/axiosRequests";
 import searchArticle from "../../utils/searchArticle";
 import validate from "../../utils/validate";
 import { uploadCoverImage } from "../../utils/uploadCoverImage";
-import { useHistory } from "react-router-dom";
+import categories from "../../utils/categories";
+
+import Preview from "../Preview/Preview";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -75,21 +77,6 @@ export default function Editor() {
   };
 
   //List of topics to write on
-  const categories = [
-    "Select Category",
-    "Technology",
-    "Health",
-    "Family",
-    "Politics",
-    "Culture",
-    "Music",
-    "Movies",
-    "Environment",
-    "Business",
-    "Marketing",
-    "Jobs",
-    "Econony",
-  ];
 
   //toggle between Edit and Preview
   function setPreview() {

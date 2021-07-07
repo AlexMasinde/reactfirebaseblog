@@ -19,12 +19,14 @@
 
 .homepage__sidebar-join > button {
   display: block;
+  font-weight: 300;
   font-size: 1.2rem;
   padding: 4px 12px;
   border: 1px solid #000000;
   background-color: #ffffff;
   margin: 1rem auto 1rem;
   transition: 1s;
+  border-radius: 2px;
 }
 
 .homepage__sidebar-join > button:hover {

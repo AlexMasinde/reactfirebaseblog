@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 1rem;
+  padding: 0 1rem 0 0;
 }
 
 .latestArticle__container-text > h6 {
@@ -23,8 +23,9 @@
 }
 
 .latestArticle__container-text > p {
-  font-size: 1.4rem;
-  line-height: 1.6rem;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 2rem;
 }
 
 /* Image */
