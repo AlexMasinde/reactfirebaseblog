@@ -390,6 +390,7 @@ export default function Editor() {
               <input
                 type="text"
                 placeholder="A short, but concise overview of your article..."
+                maxLength="200"
                 value={articleContent.tagline}
                 onChange={(e) => handleArticleTagline(e)}
               />

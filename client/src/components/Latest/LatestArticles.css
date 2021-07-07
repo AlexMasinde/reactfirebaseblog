@@ -4,8 +4,8 @@
 }
 
 .latestArticles__container-articles {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: calc((100% - 840px) / 2);
+  grid-template-rows: auto auto;
 }

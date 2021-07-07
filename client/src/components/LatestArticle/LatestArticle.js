@@ -10,18 +10,18 @@ export default function LatestArticle({ latestArticle }) {
       </div>
     );
   const article = latestArticle[0];
-  const { title, category } = article;
+  const { title, category, tagline } = article;
+  const trimmedTitle = title.length > 55 ? title.substr(0, 54) + "..." : title;
+  const trimmedTagline =
+    tagline.length > 200 ? tagline.substr(0, 199) + "..." : tagline;
   const { large } = article.coverImages;
   return (
     <div className="latestArticle__container">
       <div className="latestArticle__container-text">
         <h6>{category.toUpperCase()}</h6>
-        <h1>{title}</h1>
-        <p>
-          This is Alex's attempt to become one of the best React and web
-          developers in the world. So help me god
-        </p>
-        <p style={{ marginTop: "0.8rem" }}>Alex Masinde</p>
+        <h1>{trimmedTitle}</h1>
+        <p>{trimmedTagline}</p>
+        <p style={{ marginTop: "0.8rem" }}>John Doe</p>
       </div>
       <div className="latestArticle__container-img">
         <img src={large} alt={title} />

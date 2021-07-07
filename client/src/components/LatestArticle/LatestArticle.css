@@ -17,14 +17,14 @@
 }
 
 .latestArticle__container-text > h1 {
-  font-size: 4rem;
-  line-height: 4rem;
+  font-size: 3.5rem;
+  line-height: 3.5rem;
   margin: 0.8rem 0;
 }
 
 .latestArticle__container-text > p {
-  font-size: 1.6rem;
-  line-height: 2rem;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
 }
 
 /* Image */
