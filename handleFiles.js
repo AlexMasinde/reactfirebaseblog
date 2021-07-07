@@ -8,14 +8,24 @@ cloudinary.config({
   secure: true,
 });
 
+const uploadProfilePicture = async (file, publicId) => {
+  const result = await cloudinary.uploader.upload(file, {
+    public_id: publicId,
+    gravity: "face",
+    width: 200,
+    height: 200,
+    effect: "grayscale",
+    radius: "max",
+    crop: "fill",
+  });
+  return result;
+};
+
 const uploadBuffer = async (file, publicId) => {
-  const eagerOptions = {
-    width: 800,
-    format: "jpg",
-  };
   const upload = await cloudinary.uploader.upload(file, {
     public_id: publicId,
-    eager: eagerOptions,
+    width: 800,
+    format: "jpg",
   });
   return upload;
 };
@@ -37,4 +47,9 @@ const deleteImages = async (publicIds) => {
   await cloudinary.api.delete_resources([publicIds]);
 };
 
-module.exports = { uploadBuffer, deleteImages, uploadCoverImages };
+module.exports = {
+  uploadBuffer,
+  deleteImages,
+  uploadCoverImages,
+  uploadProfilePicture,
+};

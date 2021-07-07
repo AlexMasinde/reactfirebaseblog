@@ -7,6 +7,7 @@ const {
   uploadBuffer,
   deleteImages,
   uploadCoverImages,
+  uploadProfilePicture,
 } = require("./handleFiles");
 
 const app = express();
@@ -40,6 +41,22 @@ app.post("/api/coverupload", async (req, res) => {
     res.send(result.responsive_breakpoints[0]);
   } catch (err) {
     console.log(err);
+    res.status(500).send({ message: "Could not upload! Something went wrong" });
+  }
+});
+
+app.post("/api/profilepictures", async (req, res) => {
+  try {
+    const file = req.files.file;
+    const publicId = `blogimages/profilepictures/placeholder`;
+    const result = await uploadProfilePicture(file.path, publicId);
+    const url = result.secure_url;
+    const id = result.public_id;
+    console.log(url);
+    res.status(200).send({ url, publicId: id });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Could not upload! Something went wrong" });
   }
 });
 
@@ -50,6 +67,7 @@ app.delete("/api/deleteimages", async (req, res) => {
     console.log(result);
   } catch (err) {
     console.log(err);
+    res.status(500).send({ message: "Could not upload! Something went wrong" });
   }
 });
 

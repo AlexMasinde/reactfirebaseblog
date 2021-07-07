@@ -65,6 +65,7 @@
 
 .homepage__sidebar-follow > a > div > img {
   width: 20px;
+  border-radius: 2px;
 }
 
 .homepage__sidebar-follow > a > div > p,
