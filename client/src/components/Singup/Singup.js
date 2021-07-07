@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./Singup.css";
 
 export default function Singup() {
   const [userDetails, setUserDetails] = useState({
-    username,
-    email,
-    password,
-    confirmPassword,
-    file,
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    file: "",
   });
 
+  const [displayFiileName, setDisplayFileName] = useState("No file selected");
   function handleUsername(e) {
     const username = e.target.value;
     setUserDetails({ ...userDetails, username });
@@ -34,9 +35,10 @@ export default function Singup() {
   function handleFile(e) {
     const file = e.target.files[0];
     setUserDetails({ ...userDetails, file });
+    if (file) setDisplayFileName(file.name);
   }
 
-  function handleSignup() {
+  function handleSignup(e) {
     e.preventDefault();
   }
 

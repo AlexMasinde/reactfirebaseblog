@@ -1,4 +1,6 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+
 import "./HomepageSidebar.css";
 
 import facebookIcon from "../../icons/facebook.svg";
@@ -7,6 +9,7 @@ import instagramIcon from "../../icons/instagram.svg";
 import linkedinIcon from "../../icons/linkedin.svg";
 
 export default function HomepageSidebar() {
+  const history = useHistory();
   return (
     <div className="homepage__sidebar">
       <div className="homepage__sidebar-join">
@@ -16,7 +19,7 @@ export default function HomepageSidebar() {
           favorite topics about life and your surroundings. Joining us allows
           you to change the world by sharing your opinions with a wider audience
         </p>
-        <button>Sign Up</button>
+        <button onClick={() => history.push("/signup")}>Sign Up</button>
       </div>
       <div className="homepage__sidebar-follow">
         <h2>Follow Us</h2>
