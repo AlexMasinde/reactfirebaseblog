@@ -44,7 +44,7 @@
 }
 
 .signup__container-form > form > button {
-  width: 90%;
+  width: 100%;
   padding: 8px 0;
   font-size: 1.4rem;
   display: block;
@@ -110,9 +110,9 @@
 }
 
 .signup__control:hover {
-  border: none;
-  background-color: #000000;
-  color: #ffffff;
+  border: none !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
 
 .danger {

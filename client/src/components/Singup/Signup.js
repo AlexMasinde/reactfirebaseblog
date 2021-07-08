@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { validateSingup } from "../../utils/validate";
+import { useHistory } from "react-router-dom";
 
 import "./Signup.css";
+
+import { validateSingup } from "../../utils/validate";
 
 import { uploadImages } from "../../utils/axiosRequests";
 import { useAuth } from "../../contexts/AuthContext";
@@ -9,12 +11,14 @@ import { database } from "../../firebase";
 
 export default function Singup() {
   const { userSignup } = useAuth();
+  const history = useHistory();
+
   const [userDetails, setUserDetails] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-    file: [],
+    file: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -62,7 +66,6 @@ export default function Singup() {
     const extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
     if (file && !allowedExtensions.includes(extension)) {
-      setUserDetails({ ...userDetails, file: null });
       setDisplayFileName("Upload JPED, JPG and PNG only");
     }
 
@@ -82,7 +85,6 @@ export default function Singup() {
       confirmPassword
     );
 
-    console.log(errors);
     if (!valid) return setErrors(errors);
 
     const url = "/api/profilepictures";
@@ -90,13 +92,16 @@ export default function Singup() {
 
     try {
       setLoading(true);
+
+      const user = await userSignup(email, password);
+      if (!user) throw new Error();
       async function uploadProfilePhoto(image, endpoint) {
         const results = await uploadImages(image, endpoint);
         const { url, publicId } = results.data;
         return { url, publicId, photo: true };
       }
 
-      // //upload image to cloudinary if available otherwise use placeholder image
+      // //upload image to cloudinary if available otherwise use placeholder url
       const profilePicture = file
         ? await uploadProfilePhoto(file, url)
         : {
@@ -105,20 +110,18 @@ export default function Singup() {
             uploadedPhoto: false,
           };
 
-      const response = await userSignup(email, password);
-      const user = response.user;
-
-      console.log(user);
-
       await database.users.doc(user.uid).set({
         username,
         email,
         profilePicture,
       });
       setLoading(false);
+      history.push("/dashboard");
     } catch (err) {
-      setLoading(false);
+      if (err.code === "auth/email-already-in-use")
+        setErrors({ email: err.message });
       console.log(err);
+      setLoading(false);
     }
   }
 
@@ -137,7 +140,9 @@ export default function Singup() {
             <input type="text" onChange={(e) => handleUsername(e)} required />
           </label>
           <label className={errors.email ? "danger" : ""}>
-            {errors && errors.email ? errors.email : "Email"}
+            {(errors && errors.email) || (errors && errors.userExists)
+              ? errors.email
+              : "Email"}
             <input type="email" onChange={(e) => handleEmail(e)} required />
           </label>
           <label className={errors && errors.password ? "danger" : ""}>
@@ -170,7 +175,7 @@ export default function Singup() {
             className={`signup__control ${loading ? "button__loading" : ""}`}
             type="submit"
           >
-            Sign Up
+            <span className={loading ? "loading__text" : ""}>Sign Up</span>
           </button>
         </form>
       </div>

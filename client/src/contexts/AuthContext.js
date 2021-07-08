@@ -13,7 +13,9 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   async function userSignup(email, password) {
-    await auth.createUserWithEmailAndPassword(email, password);
+    const response = await auth.createUserWithEmailAndPassword(email, password);
+    console.log(response);
+    return response.user;
   }
 
   useEffect(() => {
