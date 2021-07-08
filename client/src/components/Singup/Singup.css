@@ -1,0 +1,105 @@
+.signup__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 45rem;
+  margin: auto;
+}
+
+.signup__container-header {
+  width: fit-content;
+  margin: 7rem auto 5rem 0;
+}
+
+.signup__container-form {
+  width: 45rem;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px;
+  padding: 24px 36px;
+}
+
+.signup__container-form > h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  width: fit-content;
+  margin: auto;
+}
+
+.signup__container-form > form > label {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.signup__container-form > form > label > input {
+  height: 3.5rem;
+  border: 1px solid rgb(159, 165, 173, 0.2);
+  outline: none;
+  margin-top: 1rem;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  padding: 3px 6px;
+}
+
+.signup__container-form > form > button {
+  width: 90%;
+  padding: 8px 0;
+  font-size: 1.4rem;
+  display: block;
+  border: none;
+  margin: 2rem auto 0;
+  border-radius: 2px;
+  background-color: #000000;
+  color: #ffffff;
+  transition: 0.5s;
+}
+
+.signup__container-form > form > button:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid rgb(159, 165, 173, 0.2);
+  padding: 5px solid;
+  cursor: pointer;
+}
+
+.singup__container-formFile > label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.singup__container-formFile > label:hover {
+  cursor: pointer;
+}
+
+.singup__container-formFile > label > input {
+  display: none;
+}
+
+.singup__container-formFile > label > p,
+.singup__container-formFile > label > span {
+  margin-top: 2rem;
+  font-weight: 300;
+}
+
+.singup__container-formFile > label > p {
+  color: #000000;
+  border: 1px solid rgb(159, 165, 173, 0.2);
+  border-radius: 2px;
+  font-size: 1.4rem;
+  transition: 0.5s;
+  padding: 6px 36px;
+}
+
+.singup__container-formFile > label > p:hover {
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.singup__container-formFile > label > span {
+  font-size: 1.6rem;
+  padding: 6px 1px;
+}

@@ -258,17 +258,6 @@
   font-size: 1.6rem;
 }
 
-/* navigation */
-.navigation {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 80%;
-  margin: 1rem auto 0;
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-}
-
 /* editor control buttons */
 .editor__control {
   display: flex;
@@ -310,8 +299,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 70%;
-  padding-top: 10px;
+  width: 80%;
+  margin: 0 auto 2rem;
+  padding: 8px 0;
   border-bottom: 1px solid rgb(159, 165, 173, 0.2);
 }
 

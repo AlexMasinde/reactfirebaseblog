@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
     //create user on firebase and get the id
     const response = await auth.createUserWithEmailAndPassword(email, password);
     const user = response.user;
-    console.log(user);
+
     //save url and user details to firebase using user id as document identifier
     await database.users.doc(user.uid).set({
       username,

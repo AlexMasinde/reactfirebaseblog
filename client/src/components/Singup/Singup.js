@@ -11,7 +11,7 @@ export default function Singup() {
     file: "",
   });
 
-  const [displayFiileName, setDisplayFileName] = useState("No file selected");
+  const [displayFiileName, setDisplayFileName] = useState("Profile Photo");
   function handleUsername(e) {
     const username = e.target.value;
     setUserDetails({ ...userDetails, username });
@@ -44,7 +44,13 @@ export default function Singup() {
 
   return (
     <div className="signup__container">
+      <div className="signup__container-header">
+        <div className="navigation__container-logo">
+          <p>IB</p>
+        </div>
+      </div>
       <div className="signup__container-form">
+        <h1>Create your Insights Account</h1>
         <form onSubmit={(e) => handleSignup(e)}>
           <label>
             UserName
@@ -70,11 +76,13 @@ export default function Singup() {
               required
             />
           </label>
-          <label>
-            <input type="file" onChange={(e) => handleFile(e)} />
-            <p className="vendor-details-fileUpload">Browse</p>
-            <p className="vendor-details-fileName">{displayFiileName}</p>
-          </label>
+          <div className="singup__container-formFile">
+            <label>
+              <input type="file" onChange={(e) => handleFile(e)} />
+              <span>{displayFiileName}</span>
+              <p>Browse</p>
+            </label>
+          </div>
           <button type="submit">Sign Up</button>
         </form>
       </div>
