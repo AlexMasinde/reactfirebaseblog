@@ -8,7 +8,7 @@ import { database } from "../../firebase";
 
 import { deleteImages, uploadImages } from "../../utils/axiosRequests";
 import searchArticle from "../../utils/searchArticle";
-import validate from "../../utils/validate";
+import { validateArticle } from "../../utils/validate";
 import { uploadCoverImage } from "../../utils/uploadCoverImage";
 import categories from "../../utils/categories";
 
@@ -160,7 +160,11 @@ export default function Editor() {
   //publish article
   async function publishArticle() {
     const { title, category, tagline, content } = articleContent;
-    const { validationErrors, valid } = validate(title, category, content);
+    const { validationErrors, valid } = validateArticle(
+      title,
+      category,
+      content
+    );
 
     setLoading({ ...loading, publish: true });
     if (!valid) {

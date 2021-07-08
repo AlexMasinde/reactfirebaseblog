@@ -1,4 +1,4 @@
-export default function validate(title, category, content) {
+export function validateArticle(title, category, content) {
   let validationErrors = {};
   if (category.trim() === "")
     validationErrors.category = "Please select a category for your article";
@@ -10,5 +10,32 @@ export default function validate(title, category, content) {
   return {
     validationErrors,
     valid: Object.keys(validationErrors).length < 1,
+  };
+}
+
+export function validateSingup(username, email, password, confirmPassword) {
+  const errors = {};
+
+  const usernameRegex = /^[a-zA-Z\s]*$/;
+  if (!usernameRegex.test(username.trim())) {
+    errors.username = "Username should include letters and spaces only";
+  }
+
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    errors.email = "Please provide a valid email address";
+  }
+
+  if (password.length < 6) {
+    errors.password = "Password should contain at least six characters";
+  }
+
+  if (password !== confirmPassword) {
+    errors.confirmPassword = "Passwords do not match";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
   };
 }
