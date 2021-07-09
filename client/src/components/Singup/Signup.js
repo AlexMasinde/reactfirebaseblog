@@ -5,9 +5,9 @@ import "./Signup.css";
 
 import { validateSingup } from "../../utils/validate";
 
-import { uploadImages } from "../../utils/axiosRequests";
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
+import uploadProfilePhoto from "../../utils/uploadProfilePhoto";
 
 export default function Singup() {
   const { userSignup } = useAuth();
@@ -95,11 +95,6 @@ export default function Singup() {
 
       const user = await userSignup(email, password);
       if (!user) throw new Error();
-      async function uploadProfilePhoto(image, endpoint) {
-        const results = await uploadImages(image, endpoint);
-        const { url, publicId } = results.data;
-        return { url, publicId, photo: true };
-      }
 
       // //upload image to cloudinary if available otherwise use placeholder url
       const profilePicture = file
