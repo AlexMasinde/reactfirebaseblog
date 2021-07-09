@@ -15,6 +15,20 @@ export default function EditProfile({ previousUserDetails }) {
     }
   }
 
+  async function updateUserDetails() {
+    const newDetails = {};
+
+    updatedUserDetails.forEach((updatedUserDetail) => {
+      if (updatedUserDetail.updated) {
+        for (const key in updatedUserDetail) {
+          if (key !== "updated" && updatedUserDetail.hasOwnProperty(key)) {
+            newDetails.key = updatedUserDetail[key];
+          }
+        }
+      }
+    });
+  }
+
   return (
     <div className="editprofile">
       <div className="editprofile__details">
@@ -50,8 +64,8 @@ export default function EditProfile({ previousUserDetails }) {
         />
       </div>
       <div className="editprofile__buttons">
-        <p>Update</p>
-        <p>Cancel</p>
+        <p onClick={updateUserDetails}>Update</p>
+        <p onClick={cancleUpdate}>Cancel</p>
       </div>
     </div>
   );
