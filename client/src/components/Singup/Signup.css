@@ -24,13 +24,17 @@
   margin: auto;
 }
 
+.signup__container-form > form > label,
+.editprofile__details > label {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
 .signup__container-form > form > label {
+  margin-top: 3rem;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  margin-top: 3rem;
-  font-size: 1.4rem;
-  font-weight: 300;
 }
 
 .signup__container-form > form > label > input {
