@@ -14,6 +14,8 @@ import categories from "../../utils/categories";
 
 import Preview from "../Preview/Preview";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function Editor() {
   //Access local storage to retrieve saved data
   function getSavedArticle() {
@@ -71,10 +73,7 @@ export default function Editor() {
   const history = useHistory();
 
   //get curent user as author from auth context
-  const author = {
-    firstName: "Alex",
-    lastName: "Masinde",
-  };
+  const { currentUser } = useAuth();
 
   //List of topics to write on
 
@@ -205,6 +204,7 @@ export default function Editor() {
       //Set article ID and save the article to firestore
       const usedImages = updatedUrls.filter((updatedUrl) => updatedUrl.used);
       const articleId = uuid();
+      const userId = currentUser.uid;
       await database.articles.doc(articleId).set({
         articleId,
         title,
@@ -225,7 +225,7 @@ export default function Editor() {
       }
 
       setLoading({ ...loading, publish: false });
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       setLoading({ ...loading, publish: false });
       console.log(err);
@@ -319,7 +319,7 @@ export default function Editor() {
           </p>
         </div>
         <div className="navigation__back">
-          <p>Back</p>
+          <p onClick={() => history.push("/dashboard")}>Back</p>
         </div>
       </div>
       {status.previewing && (

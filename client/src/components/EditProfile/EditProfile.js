@@ -44,16 +44,16 @@ export default function EditProfile({
         }
       });
 
-      if (!Object.keys(newDetails) < 1) {
+      if (!Object.keys(newDetails).length < 1) {
         const keys = Object.keys(newDetails).map((key) => {
           return key;
         });
-        let trimUserDetails = userDetails;
+        let trimmedUserDetails = userDetails;
         keys.forEach((key) => {
-          delete trimUserDetails[key];
+          delete trimmedUserDetails[key];
         });
-        setUserDetails({ ...trimUserDetails, ...newDetails });
-        console.log({ ...trimUserDetails, ...newDetails });
+        setUserDetails({ ...trimmedUserDetails, ...newDetails });
+        console.log({ ...trimmedUserDetails, ...newDetails });
         await database.users.doc(currentUser.uid).update(newDetails);
         setLoading(false);
         setEditing(false);
