@@ -18,8 +18,7 @@ export default function LatestArticles() {
         .get();
       const results = data.docs;
       const formattedArticles = results.map((result) => {
-        const formattedArticle = database.formatDocument(result);
-        return formattedArticle;
+        return database.formatDocument(result);
       });
 
       const findLatest = formattedArticles.slice(0, 1);

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./UserDashboard.css";
 
 import { useUserDetails } from "../../contexts/UserDetailsContext";
 
+import { database } from "../../firebase";
+
 import Navigation from "../Navigation/Navigation";
 import EditProfile from "../EditProfile/EditProfile";
+import UserArticle from "../UserArticles/UserArticle";
 
 import facebook from "../../icons/facebook.svg";
 import twitter from "../../icons/twitter.svg";
@@ -15,8 +18,31 @@ import pen from "../../icons/pen.svg";
 
 export default function UserDashboard() {
   const { userDetails, setUserDetails } = useUserDetails();
+  const [articles, setArticles] = useState();
   const [editing, setEditing] = useState(false);
+  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function getArticles() {
+      try {
+        const data = await database.articles
+          .where("userId", "==", userDetails.id)
+          .orderBy("createdAt", "desc")
+          .get();
+        const results = data.docs;
+        const formattedArticles = results.map((result) => {
+          return database.formatDocument(result);
+        });
+        console.log(formattedArticles);
+        setArticles(formattedArticles);
+      } catch (err) {
+        console.log(err);
+        setError("Could not fetch articles! Reload the page to try again");
+      }
+    }
+    getArticles();
+  }, [userDetails.id]);
 
   return (
     <div className="dashboard__container">
@@ -85,7 +111,11 @@ export default function UserDashboard() {
           )}
         </div>
         <div className="dashboard__content-articles">
-          <p>Articles go Here</p>
+          <p>YOUR ARTICLES</p>
+          {articles &&
+            articles.map((article, index) => {
+              return <UserArticle key={index} article={article} />;
+            })}
         </div>
       </div>
     </div>

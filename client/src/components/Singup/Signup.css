@@ -50,21 +50,26 @@
 .signup__container-form > form > button {
   width: 100%;
   padding: 8px 0;
+  margin: 2rem auto 0;
+}
+
+.signup__container-form > form > button,
+.userArticle__button {
   font-size: 1.4rem;
   display: block;
   border: none;
-  margin: 2rem auto 0;
   border-radius: 2px;
   background-color: #000000;
   color: #ffffff;
   transition: 0.5s;
+  border: 1px solid transparent;
 }
 
-.signup__container-form > form > button:hover {
+.signup__container-form > form > button:hover,
+.userArticle__button:hover {
   background-color: #ffffff;
   color: #000000;
   border: 1px solid rgb(159, 165, 173, 0.2);
-  padding: 5px solid;
   cursor: pointer;
 }
 
@@ -108,12 +113,14 @@
   padding: 6px 1px;
 }
 
-.signup__control {
+.signup__control,
+.userArticle__button-loading {
   position: relative;
   transition: 0.4s;
 }
 
-.signup__control:hover {
+.signup__control:hover,
+.userArticle__button-loading:hover {
   border: none !important;
   background-color: #000000 !important;
   color: #ffffff !important;

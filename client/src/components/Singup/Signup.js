@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 
 import "./Signup.css";
 
-import { validateSingup } from "../../utils/validate";
-
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
+
+import { validateSingup } from "../../utils/validate";
 import uploadProfilePhoto from "../../utils/uploadProfilePhoto";
 
 export default function Singup() {

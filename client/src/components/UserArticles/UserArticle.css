@@ -1,0 +1,39 @@
+.userArticle__container {
+  display: flex;
+  border: 1px solid rgb(159, 165, 173, 0.2);
+  margin-bottom: 3rem;
+}
+
+.userArticle__container > img {
+  width: 340px;
+  display: block;
+}
+
+.userArticle__details {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.userArticle__details > h1 {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: 500;
+}
+
+.userArticle__details > h3 {
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 2rem;
+}
+
+.userArticle__details > p {
+  font-size: 1.2rem;
+  color: grey;
+  font-weight: 300;
+}
+.userArticle__button {
+  padding: 6px 12px;
+  border: 1px solid transparent;
+}
