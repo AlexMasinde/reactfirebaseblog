@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { auth, database } from "../firebase";
+import { auth } from "../firebase";
 
 const AuthContext = createContext();
 
@@ -10,7 +10,6 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [userDetails, setUserDetails] = useState();
   const [loading, setLoading] = useState(true);
 
   async function userSignup(email, password) {
@@ -18,8 +17,8 @@ export function AuthProvider({ children }) {
     return response.user;
   }
 
-  async function userSignout() {
-    await auth.signOut();
+  function userSignout() {
+    return auth.signOut();
   }
 
   useEffect(() => {

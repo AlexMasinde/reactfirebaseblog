@@ -14,7 +14,7 @@ export default function Preview({ articleContent, author }) {
       </div>
       <div className="preview__author">
         <p>
-          By <span>{`${author.firstName} ${author.lastName}`}</span>
+          By <span>{author}</span>
         </p>
         <p>{date.toDateString()}</p>
       </div>

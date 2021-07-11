@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./UserDashboard.css";
 
-import { useAuth } from "../../contexts/AuthContext";
-
-import { database } from "../../firebase";
+import { useUserDetails } from "../../contexts/UserDetailsContext";
 
 import Navigation from "../Navigation/Navigation";
 import EditProfile from "../EditProfile/EditProfile";
@@ -16,35 +14,9 @@ import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
 
 export default function UserDashboard() {
-  const { currentUser } = useAuth();
-  const [userDetails, setUserDetails] = useState();
+  const { userDetails, setUserDetails } = useUserDetails();
   const [editing, setEditing] = useState(false);
-  // const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    async function getUserData() {
-      try {
-        setLoading(true);
-        const userDoc = await database.users.doc(currentUser.uid).get();
-        const user = database.formatDocument(userDoc);
-        setUserDetails(user);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
-      }
-    }
-    getUserData();
-  }, [currentUser.uid]);
-
-  if (!userDetails) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
 
   return (
     <div className="dashboard__container">

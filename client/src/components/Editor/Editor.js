@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 
 import "./editor.css";
 
+import { useUserDetails } from "../../contexts/UserDetailsContext";
+
 import { database } from "../../firebase";
 
 import { deleteImages, uploadImages } from "../../utils/axiosRequests";
@@ -13,8 +15,6 @@ import { uploadCoverImage } from "../../utils/uploadCoverImage";
 import categories from "../../utils/categories";
 
 import Preview from "../Preview/Preview";
-
-import { useAuth } from "../../contexts/AuthContext";
 
 export default function Editor() {
   //Access local storage to retrieve saved data
@@ -73,7 +73,7 @@ export default function Editor() {
   const history = useHistory();
 
   //get curent user as author from auth context
-  const { currentUser } = useAuth();
+  const { userDetails } = useUserDetails();
 
   //List of topics to write on
 
@@ -204,9 +204,11 @@ export default function Editor() {
       //Set article ID and save the article to firestore
       const usedImages = updatedUrls.filter((updatedUrl) => updatedUrl.used);
       const articleId = uuid();
-      const userId = currentUser.uid;
+      const { id, username } = userDetails;
       await database.articles.doc(articleId).set({
         articleId,
+        userId: id,
+        author: username,
         title,
         category,
         tagline,
@@ -323,7 +325,10 @@ export default function Editor() {
         </div>
       </div>
       {status.previewing && (
-        <Preview articleContent={articleContent} author={author} />
+        <Preview
+          articleContent={articleContent}
+          author={userDetails.username}
+        />
       )}
       {status.editing && (
         <div className="container">
