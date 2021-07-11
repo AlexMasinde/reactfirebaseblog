@@ -5,8 +5,9 @@ import "./UserArticle.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
 
-export default function UserArticles({ article }) {
+export default function UserArticles({ article, updateArtices }) {
   const { currentUser } = useAuth();
+  const { articles, setArticles } = updateArtices;
   const { articleId, title, tagline, createdAt, userId } = article;
   const { small } = article.coverImages;
   const allowed = currentUser && currentUser.uid === userId;
@@ -26,6 +27,10 @@ export default function UserArticles({ article }) {
       setLoading(true);
       setError("");
       await database.articles.doc(articleId).delete();
+      const updatedArticles = articles.filter(
+        (existingArticle) => existingArticle.id !== article.id
+      );
+      setArticles(updatedArticles);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -33,8 +38,6 @@ export default function UserArticles({ article }) {
       console.log(err);
     }
   }
-
-  async function handleDelete() {}
   return (
     <div className="userArticle__container">
       <img src={small} alt={title} />
@@ -45,7 +48,7 @@ export default function UserArticles({ article }) {
         {allowed && (
           <button
             disabled={loading}
-            className={`userArticle__button${
+            className={`userArticle__button ${
               loading ? "button__loading userArticle__button-loading" : ""
             }`}
             onClick={handleDelete}

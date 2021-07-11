@@ -67,54 +67,62 @@ export default function UserDashboard() {
             />
           )}
           {!editing && (
-            <div className="dashborad__content-userDetails">
+            <div className="dashborad__content-user">
               <button onClick={() => setEditing(true)}>Update Profile</button>
-              <p>
-                <span>
-                  <img src={email} alt="User email" />
-                </span>
-                {userDetails?.email}
-              </p>
-              {userDetails.bio && (
+              <div className="dashborad__content-userDetails">
                 <p>
                   <span>
-                    <img src={pen} alt="User bio" />
+                    <img src={email} alt="User email" />
                   </span>
-                  {userDetails.bio}
+                  {userDetails?.email}
                 </p>
-              )}
-              {userDetails.twitter && (
-                <p>
-                  <span>
-                    <img src={twitter} alt="User twitter" />
-                  </span>
-                  {userDetails.twitter}
-                </p>
-              )}
-              {userDetails.facebook && (
-                <p>
-                  <span>
-                    <img src={facebook} alt="User facebook" />
-                  </span>
-                  {userDetails.facebook}
-                </p>
-              )}
-              {userDetails.website && (
-                <p>
-                  <span>
-                    <img src={global} alt="User website" />
-                  </span>
-                  {userDetails.website}
-                </p>
-              )}
+                {userDetails.bio && (
+                  <p>
+                    <span>
+                      <img src={pen} alt="User bio" />
+                    </span>
+                    {userDetails.bio}
+                  </p>
+                )}
+                {userDetails.twitter && (
+                  <p>
+                    <span>
+                      <img src={twitter} alt="User twitter" />
+                    </span>
+                    {userDetails.twitter}
+                  </p>
+                )}
+                {userDetails.facebook && (
+                  <p>
+                    <span>
+                      <img src={facebook} alt="User facebook" />
+                    </span>
+                    {userDetails.facebook}
+                  </p>
+                )}
+                {userDetails.website && (
+                  <p>
+                    <span>
+                      <img src={global} alt="User website" />
+                    </span>
+                    {userDetails.website}
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </div>
         <div className="dashboard__content-articles">
-          <p>YOUR ARTICLES</p>
+          <p>Articles</p>
           {articles &&
             articles.map((article, index) => {
-              return <UserArticle key={index} article={article} />;
+              return (
+                <UserArticle
+                  key={index}
+                  article={article}
+                  updateArtices={{ articles, setArticles }}
+                />
+              );
             })}
         </div>
       </div>

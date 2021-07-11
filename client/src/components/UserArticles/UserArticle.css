@@ -2,6 +2,7 @@
   display: flex;
   border: 1px solid rgb(159, 165, 173, 0.2);
   margin-bottom: 3rem;
+  transition: 0.5s;
 }
 
 .userArticle__container > img {

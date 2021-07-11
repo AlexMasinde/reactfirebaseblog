@@ -1,7 +1,5 @@
 .dashboard__content {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  width: 70%;
+  width: 60%;
   margin: auto;
 }
 
@@ -13,28 +11,32 @@
 }
 
 .dashboard__content-profileImage > img {
-  width: 63px;
+  width: 100px;
   padding: 3px;
   border-radius: 50%;
   border: 1px dotted rgb(159, 165, 173);
 }
 
 .dashboard__content-profileImage > p {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 300;
   padding-top: 1rem;
   color: rgb(159, 165, 173);
 }
 
 .dashborad__content-userDetails {
-  margin-top: 1rem;
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem auto 2rem;
 }
 
-.dashborad__content-userDetails > button {
-  width: 80%;
+.dashborad__content-user > button {
+  width: fit-content;
   display: block;
-  margin: auto;
-  padding: 4px;
+  margin: 2rem auto 0;
+  padding: 4px 24px;
   border: 1px solid rgb(159, 165, 173, 0.2);
   background-color: #ffffff;
   border-radius: 4px;
@@ -43,7 +45,7 @@
   transition: 0.5s;
 }
 
-.dashborad__content-userDetails > button:hover {
+.dashborad__content-user > button:hover {
   cursor: pointer;
   background-color: #000000;
   color: #ffffff;
@@ -53,8 +55,8 @@
   font-size: 1.4rem;
   font-weight: 300;
   margin-top: 1rem;
-  width: 80%;
   display: flex;
+  margin-left: 2rem;
 }
 
 .dashborad__content-userDetails > p > span > img {

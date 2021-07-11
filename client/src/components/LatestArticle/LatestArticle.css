@@ -1,5 +1,6 @@
 .latestArticle__container {
   display: flex;
+  justify-content: space-between;
 }
 
 /* Text */
