@@ -2,9 +2,21 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import "./preview.css";
 
-export default function Preview({ articleContent, author }) {
-  const { category, title, tagline, content } = articleContent;
-  const date = new Date();
+export default function Preview({ article }) {
+  const { author, createdAt, tagline, content, title, category } = article;
+
+  const date = createdAt
+    ? new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }).format(createdAt.toDate())
+    : new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }).format(new Date());
+
   return (
     <div className="preview__container">
       <div className="preview__header">
@@ -16,7 +28,7 @@ export default function Preview({ articleContent, author }) {
         <p>
           By <span>{author}</span>
         </p>
-        <p>{date.toDateString()}</p>
+        <p>{date}</p>
       </div>
       <div className="preview__coverImage"></div>
       <div className="preview__text">

@@ -24,7 +24,6 @@ export default function LatestArticles() {
       const findLatest = formattedArticles.slice(0, 1);
       setLatestArticle(findLatest);
       setArticles(formattedArticles);
-      console.log(findLatest);
     }
     fetchArticles();
   }, []);

@@ -3,6 +3,12 @@
   width: 280px;
   /* background-color: #fff; */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px;
+  transition: 0.5s;
+}
+
+.thumbnail__container:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .thumbnail__container-text {

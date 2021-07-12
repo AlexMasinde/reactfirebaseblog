@@ -1,19 +1,22 @@
 .latestArticle__container {
   display: flex;
   justify-content: space-between;
+  padding: 0;
+  margin: 0;
 }
 
 /* Text */
 .latestArticle__container-text {
   display: flex;
   flex-direction: column;
+  max-width: 40%;
   justify-content: center;
   padding: 0 1rem 0 0;
+  overflow-wrap: break-word;
 }
 
 .latestArticle__container-text > h6 {
   font-weight: 400;
-  width: fit-content;
   font-size: 1.2rem;
 }
 

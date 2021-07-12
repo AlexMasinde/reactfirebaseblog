@@ -302,6 +302,15 @@ export default function Editor() {
     setCopied(!copied);
   }
 
+  const previewContent = {
+    author: userDetails.username,
+    tagline: articleContent.tagline,
+    content: articleContent.content,
+    title: articleContent.title,
+    category: articleContent.category,
+    createdAt: null,
+  };
+
   return (
     <div>
       <div id="top" className="navigation">
@@ -324,12 +333,7 @@ export default function Editor() {
           <p onClick={() => history.push("/dashboard")}>Back</p>
         </div>
       </div>
-      {status.previewing && (
-        <Preview
-          articleContent={articleContent}
-          author={userDetails.username}
-        />
-      )}
+      {status.previewing && <Preview article={previewContent} />}
       {status.editing && (
         <div className="container">
           <div className="editor">
