@@ -6,7 +6,14 @@
   border-bottom: 1px dotted #000000;
   padding-bottom: 1rem;
 }
+.navigation__container-logo {
+  transition: 0.3s;
+}
 
+.navigation__container-logo:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
 .navigation__container-logo > p {
   padding: 0px 3px;
   font-weight: 300;

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { auth } from "../firebase";
+import { auth, database } from "../firebase";
 
 const AuthContext = createContext();
 
@@ -22,8 +22,13 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const userDetails = await database.users.doc(user.uid).get();
+        setCurrentUser(database.formatDocument(userDetails));
+      } else {
+        setCurrentUser(null);
+      }
       setLoading(false);
     });
     return unsubscribe;
@@ -31,6 +36,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    setCurrentUser,
     userSignup,
     userSignout,
   };

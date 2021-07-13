@@ -2,17 +2,15 @@ import React, { useState } from "react";
 
 import "./EditProfile.css";
 
-import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
 
 export default function EditProfile({
-  userDetails,
+  currentUser,
   setEditing,
   setLoading,
-  setUserDetails,
+  setCurrentUser,
 }) {
-  const { currentUser } = useAuth();
-  const { username, bio, twitter, facebook, website } = userDetails;
+  const { id, username, bio, twitter, facebook, website } = currentUser;
 
   const [updatedUserDetails, setUpdatedUserDetails] = useState([]);
 
@@ -48,13 +46,13 @@ export default function EditProfile({
         const keys = Object.keys(newDetails).map((key) => {
           return key;
         });
-        let trimmedUserDetails = userDetails;
+        let trimmedUserDetails = currentUser;
         keys.forEach((key) => {
           delete trimmedUserDetails[key];
         });
-        setUserDetails({ ...trimmedUserDetails, ...newDetails });
+        setCurrentUser({ ...trimmedUserDetails, ...newDetails });
         console.log({ ...trimmedUserDetails, ...newDetails });
-        await database.users.doc(currentUser.uid).update(newDetails);
+        await database.users.doc(id).update(newDetails);
         setLoading(false);
         setEditing(false);
       } else {

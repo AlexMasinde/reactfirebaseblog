@@ -2,7 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import "./preview.css";
 
-export default function Preview({ article }) {
+export default function Preview({ article, imageUrl }) {
   const { author, createdAt, tagline, content, title, category } = article;
 
   const date = createdAt
@@ -29,6 +29,11 @@ export default function Preview({ article }) {
           By <span>{author}</span>
         </p>
         <p>{date}</p>
+        {imageUrl && (
+          <div className="preview__image">
+            <img src={imageUrl} alt={title} loading="lazy" />
+          </div>
+        )}
       </div>
       <div className="preview__coverImage"></div>
       <div className="preview__text">

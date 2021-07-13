@@ -10,7 +10,6 @@ export default function UserArticles({ article, updateArtices }) {
   const { articles, setArticles } = updateArtices;
   const { articleId, title, tagline, createdAt, userId } = article;
   const { small } = article.coverImages;
-  const allowed = currentUser && currentUser.uid === userId;
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const date = createdAt.toDate();
@@ -20,7 +19,7 @@ export default function UserArticles({ article, updateArtices }) {
     day: "2-digit",
   }).format(date);
 
-  console.log(formatedDate);
+  const allowed = currentUser && currentUser.id === userId;
 
   async function handleDelete() {
     try {

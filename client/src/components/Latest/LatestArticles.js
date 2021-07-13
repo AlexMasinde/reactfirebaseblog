@@ -10,6 +10,7 @@ import LatestArticle from "../LatestArticle/LatestArticle";
 export default function LatestArticles() {
   const [articles, setArticles] = useState([]);
   const [latestArticle, setLatestArticle] = useState();
+
   useEffect(() => {
     async function fetchArticles() {
       const data = await database.articles

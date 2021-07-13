@@ -15,17 +15,28 @@ export default function Navigation() {
     await userSignout();
   }
 
+  function home() {
+    history.push("/homepage");
+  }
+
+  function dashboard() {
+    history.push("/dashboard");
+  }
+
   return (
     <div className="navigation__container">
-      <div className="navigation__container-logo">
+      <div onClick={home} className="navigation__container-logo">
         <p>IB</p>
       </div>
-      <div className="navigation__container-name">
-        <p>InsightsBlog</p>
-      </div>
+      {!auth && (
+        <div className="navigation__container-name">
+          <p>InsightsBlog</p>
+        </div>
+      )}
       <div className="navigation__container-buttons">
         {auth && (
           <>
+            <p onClick={dashboard}>My Account</p>
             <p onClick={() => history.push("/add")}>Add Article</p>
             <p onClick={handleSignout}>Logout</p>
           </>

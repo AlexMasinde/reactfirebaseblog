@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import "./UserDashboard.css";
 
-import { useUserDetails } from "../../contexts/UserDetailsContext";
-
 import { database } from "../../firebase";
 
 import Navigation from "../Navigation/Navigation";
@@ -16,8 +14,10 @@ import email from "../../icons/email.svg";
 import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function UserDashboard() {
-  const { userDetails, setUserDetails } = useUserDetails();
+  const { currentUser, setCurrentUser } = useAuth();
   const [articles, setArticles] = useState();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState();
@@ -27,7 +27,7 @@ export default function UserDashboard() {
     async function getArticles() {
       try {
         const data = await database.articles
-          .where("userId", "==", userDetails.id)
+          .where("userId", "==", currentUser.id)
           .orderBy("createdAt", "desc")
           .get();
         const results = data.docs;
@@ -42,7 +42,7 @@ export default function UserDashboard() {
       }
     }
     getArticles();
-  }, [userDetails.id]);
+  }, [currentUser.id]);
 
   return (
     <div className="dashboard__container">
@@ -53,17 +53,17 @@ export default function UserDashboard() {
         <div className="dashboard__content-profile">
           <div className="dashboard__content-profileImage">
             <img
-              src={userDetails?.profilePicture.url}
-              alt={userDetails?.username}
+              src={currentUser?.profilePicture.url}
+              alt={currentUser?.username}
             />
-            <p>{userDetails?.username}</p>
+            <p>{currentUser?.username}</p>
           </div>
           {editing && (
             <EditProfile
               setEditing={setEditing}
               setLoading={setLoading}
-              setUserDetails={setUserDetails}
-              userDetails={userDetails}
+              setCurrentUser={setCurrentUser}
+              currentUser={currentUser}
             />
           )}
           {!editing && (
@@ -74,38 +74,38 @@ export default function UserDashboard() {
                   <span>
                     <img src={email} alt="User email" />
                   </span>
-                  {userDetails?.email}
+                  {currentUser?.email}
                 </p>
-                {userDetails.bio && (
+                {currentUser.bio && (
                   <p>
                     <span>
                       <img src={pen} alt="User bio" />
                     </span>
-                    {userDetails.bio}
+                    {currentUser.bio}
                   </p>
                 )}
-                {userDetails.twitter && (
+                {currentUser.twitter && (
                   <p>
                     <span>
                       <img src={twitter} alt="User twitter" />
                     </span>
-                    {userDetails.twitter}
+                    {currentUser.twitter}
                   </p>
                 )}
-                {userDetails.facebook && (
+                {currentUser.facebook && (
                   <p>
                     <span>
                       <img src={facebook} alt="User facebook" />
                     </span>
-                    {userDetails.facebook}
+                    {currentUser.facebook}
                   </p>
                 )}
-                {userDetails.website && (
+                {currentUser.website && (
                   <p>
                     <span>
                       <img src={global} alt="User website" />
                     </span>
-                    {userDetails.website}
+                    {currentUser.website}
                   </p>
                 )}
               </div>

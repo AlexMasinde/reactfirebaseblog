@@ -12,7 +12,7 @@ export default function ArticleThumbnail({ article }) {
   const history = useHistory();
 
   function viewArticle() {
-    history.push(`/article/${article.id}`);
+    history.push(`/article/${article.id}/${article.userId}`);
   }
 
   return (
