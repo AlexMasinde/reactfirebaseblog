@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 
+import { database } from "../firebase";
+
 export default function useGetAuthor(userId) {
   const { currentUser } = useAuth();
-  const [author, setAuthor] = useState();
+  const [articleAuthor, setArticleAuthor] = useState();
   const [authorError, setAuthorError] = useState();
   const [authorLoading, setAuthorLoading] = useState(false);
 
@@ -13,11 +15,11 @@ export default function useGetAuthor(userId) {
       try {
         setAuthorLoading(true);
         if (currentUser && currentUser.id === userId) {
-          setAuthor(currentUser);
+          setArticleAuthor(currentUser);
           setAuthorLoading(false);
         } else {
           const data = await database.users.doc(userId).get();
-          setAuthor(database.formatDocument(data));
+          setArticleAuthor(database.formatDocument(data));
           setAuthorLoading(false);
         }
       } catch (err) {
@@ -29,5 +31,5 @@ export default function useGetAuthor(userId) {
     getAuthor();
   });
 
-  return { author, authorLoading, authorError };
+  return { articleAuthor, authorLoading, authorError };
 }

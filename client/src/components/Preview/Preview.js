@@ -1,9 +1,10 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import AuthorDetails from "../AuthorDetails/AuthorDetails";
 import "./preview.css";
 
-export default function Preview({ article, imageUrl }) {
-  const { author, createdAt, tagline, content, title, category } = article;
+export default function Preview({ article, imageUrl, userId }) {
+  const { createdAt, tagline, content, title, category } = article;
 
   const date = createdAt
     ? new Intl.DateTimeFormat("en-US", {
@@ -24,18 +25,20 @@ export default function Preview({ article, imageUrl }) {
         <h1>{title}</h1>
         <p>{tagline}</p>
       </div>
+      <p>{date}</p>
       <div className="preview__author">
-        <p>
-          By <span>{author}</span>
-        </p>
+        <div className="preview__authorDetails">
+          <AuthorDetails userId={userId} />
+        </div>
         <p>{date}</p>
+      </div>
+      <div className="preview__coverImage">
         {imageUrl && (
           <div className="preview__image">
             <img src={imageUrl} alt={title} loading="lazy" />
           </div>
         )}
       </div>
-      <div className="preview__coverImage"></div>
       <div className="preview__text">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>

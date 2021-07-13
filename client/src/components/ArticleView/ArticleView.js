@@ -8,34 +8,27 @@ import { database } from "../../firebase";
 import Preview from "../Preview/Preview";
 import Navigation from "../Navigation/Navigation";
 
-import { useAuth } from "../../contexts/AuthContext";
-
 export default function ArticleView() {
-  const { currentUser } = useAuth();
+  const { id, userId } = useParams();
 
   const [article, setArticle] = useState();
-  const [author, setAuthor] = useState();
-  const [loading, setLoading] = useState({
-    author: false,
-    article: false,
-  });
-
-  const [error, setError] = useState("");
-  const { id, userId } = useParams();
+  const [articleLoading, setArticleLoading] = useState(false);
+  const [articleError, setArticleError] = useState();
 
   useEffect(() => {
     async function getArticle() {
       try {
-        setError("");
+        setArticleError("");
         const data = await database.articles.doc(id).get();
         setArticle(database.formatDocument(data));
       } catch (err) {
         console.log(err);
-        setError("Could not retrieve article! Please try again");
+        setArticleError("Could not retrieve article! Please try again");
       }
     }
     getArticle();
   });
+
   return (
     <div className="articleView__container">
       <Navigation />
