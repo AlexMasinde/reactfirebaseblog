@@ -1,22 +1,30 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
-import useGetAuthor from "../../Hooks/useGetAuthor";
+import "./AuthorDetails.css";
 
 import twittericon from "../../icons/twitter.svg";
 import facebookicon from "../../icons/facebook.svg";
 import websiteicon from "../../icons/global.svg";
 
-export default function AuthorDetails({ userId }) {
-  const { articleAuthor, authorError, authorLoading } = useGetAuthor(userId);
+export default function AuthorDetails({ author }) {
+  const { articleAuthor, authorError, authorLoading } = author;
+  const history = useHistory();
+
+  function userProfile() {
+    history.push("/dashboard");
+  }
 
   return (
     <div className="authordetails__container">
       <div className="authorDetails__content">
-        {console.log(articleAuthor)}
         {authorLoading && <p>Loading...</p>}
-        {(!authorLoading && articleAuthor)(
+        {articleAuthor && (
           <p>
-            <span>{articleAuthor.author}</span>
+            <div>
+              <img src={articleAuthor.profilePicture.url} alt="twitter" />
+            </div>
+            <span onClick={userProfile}>{articleAuthor.username}</span>
             {articleAuthor.twitter && (
               <span>
                 <img src={twittericon} alt="twitter" />

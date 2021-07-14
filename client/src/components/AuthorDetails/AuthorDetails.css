@@ -1,0 +1,33 @@
+.authorDetails__content > p {
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.authorDetails__content > p > span > img {
+  width: 25px;
+  padding: 0 0 0 1rem;
+  transition: 0.3s;
+}
+
+.authorDetails__content > p > span > img:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.authorDetails__content > p > span:nth-child(2) {
+  text-decoration: underline;
+}
+
+.authorDetails__content > p > span:nth-child(2):hover {
+  cursor: pointer;
+}
+
+.authorDetails__content > p > div > img {
+  width: 50px;
+  border: 1px dotted #000000;
+  border-radius: 50%;
+  padding: 1px;
+  margin-right: 1rem;
+}

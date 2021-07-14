@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import AuthorDetails from "../AuthorDetails/AuthorDetails";
 import "./preview.css";
 
-export default function Preview({ article, imageUrl, userId }) {
+export default function Preview({ article, imageUrl, author }) {
   const { createdAt, tagline, content, title, category } = article;
 
   const date = createdAt
@@ -25,10 +25,9 @@ export default function Preview({ article, imageUrl, userId }) {
         <h1>{title}</h1>
         <p>{tagline}</p>
       </div>
-      <p>{date}</p>
       <div className="preview__author">
         <div className="preview__authorDetails">
-          <AuthorDetails userId={userId} />
+          <AuthorDetails author={author} />
         </div>
         <p>{date}</p>
       </div>

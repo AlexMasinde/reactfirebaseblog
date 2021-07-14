@@ -8,6 +8,8 @@ import { database } from "../../firebase";
 import Preview from "../Preview/Preview";
 import Navigation from "../Navigation/Navigation";
 
+import useGetAuthor from "../../Hooks/useGetAuthor";
+
 export default function ArticleView() {
   const { id, userId } = useParams();
 
@@ -27,7 +29,10 @@ export default function ArticleView() {
       }
     }
     getArticle();
-  });
+    console.log("component mounted");
+  }, [id]);
+
+  const { articleAuthor, authorError, authorLoading } = useGetAuthor(userId);
 
   return (
     <div className="articleView__container">
@@ -37,7 +42,7 @@ export default function ArticleView() {
           <Preview
             article={article}
             imageUrl={article.coverImages.large}
-            userId={userId}
+            author={{ articleAuthor, authorError, authorLoading }}
           />
         )}
       </div>

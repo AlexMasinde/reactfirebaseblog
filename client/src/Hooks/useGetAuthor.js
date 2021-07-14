@@ -30,6 +30,5 @@ export default function useGetAuthor(userId) {
     }
     getAuthor();
   });
-
   return { articleAuthor, authorLoading, authorError };
 }
