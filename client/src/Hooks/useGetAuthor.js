@@ -24,7 +24,6 @@ export default function useGetAuthor(userId) {
         }
       } catch (err) {
         setAuthorLoading(false);
-        console.log(err);
         setAuthorError("Something went wrong! Please refresh to try again");
       }
     }

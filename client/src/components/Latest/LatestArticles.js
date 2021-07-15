@@ -9,28 +9,35 @@ import LatestArticle from "../LatestArticle/LatestArticle";
 
 export default function LatestArticles() {
   const [articles, setArticles] = useState([]);
+  const [error, setError] = useState("");
+
   const [latestArticle, setLatestArticle] = useState();
 
   useEffect(() => {
-    async function fetchArticles() {
-      const data = await database.articles
-        .orderBy("createdAt", "desc")
-        .limit(6)
-        .get();
-      const results = data.docs;
-      const formattedArticles = results.map((result) => {
-        return database.formatDocument(result);
-      });
-
-      const findLatest = formattedArticles.slice(0, 1);
-      setLatestArticle(findLatest);
-      setArticles(formattedArticles);
-    }
-    fetchArticles();
+    const unsubscribe = database.articles
+      .orderBy("createdAt", "desc")
+      .limit(6)
+      .onSnapshot(
+        (documentSnapshot) => {
+          const formattedArticles = [];
+          documentSnapshot.forEach((doc) => {
+            formattedArticles.push(database.formatDocument(doc));
+          });
+          const findLatest = formattedArticles.slice(0, 1);
+          setLatestArticle(findLatest);
+          setArticles(formattedArticles);
+        },
+        (error) => {
+          console.log(error);
+          setError("Could not fetch articles. Please try again");
+        }
+      );
+    return () => unsubscribe();
   }, []);
 
   return (
     <section className="latestArticles__container">
+      {console.log(articles)}
       <div className="latestArticles__container-latest">
         <LatestArticle latestArticle={latestArticle} />
       </div>

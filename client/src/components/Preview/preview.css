@@ -48,6 +48,11 @@
   margin-top: 12px;
 }
 
+.preview__image > img {
+  width: 100%;
+  margin: auto;
+}
+
 /* markdown preview styling */
 .preview__text {
   width: 100%;

@@ -8,7 +8,7 @@ import facebookicon from "../../icons/facebook.svg";
 import websiteicon from "../../icons/global.svg";
 
 export default function AuthorDetails({ author }) {
-  const { articleAuthor, authorError, authorLoading } = author;
+  const { articleAuthor, authorError } = author;
   const history = useHistory();
 
   function userProfile() {
@@ -18,7 +18,6 @@ export default function AuthorDetails({ author }) {
   return (
     <div className="authordetails__container">
       <div className="authorDetails__content">
-        {authorLoading && <p>Loading...</p>}
         {articleAuthor && (
           <p>
             <div>

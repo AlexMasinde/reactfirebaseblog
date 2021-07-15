@@ -29,20 +29,20 @@ export default function ArticleView() {
       }
     }
     getArticle();
-    console.log("component mounted");
   }, [id]);
 
   const { articleAuthor, authorError, authorLoading } = useGetAuthor(userId);
 
   return (
     <div className="articleView__container">
+      {console.log(articleAuthor)}
       <Navigation />
       <div className="articleView__content">
         {article && (
           <Preview
             article={article}
             imageUrl={article.coverImages.large}
-            author={{ articleAuthor, authorError, authorLoading }}
+            author={{ articleAuthor, authorError }}
           />
         )}
       </div>

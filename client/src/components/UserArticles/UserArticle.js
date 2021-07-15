@@ -4,10 +4,11 @@ import "./UserArticle.css";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
+import { useArticles } from "../../contexts/ArticlesContext";
 
-export default function UserArticles({ article, updateArtices }) {
+export default function UserArticles({ article }) {
   const { currentUser } = useAuth();
-  const { articles, setArticles } = updateArtices;
+  const { setUserArticles, userArticles } = useArticles();
   const { articleId, title, tagline, createdAt, userId } = article;
   const { small } = article.coverImages;
   const [error, setError] = useState();
@@ -26,10 +27,10 @@ export default function UserArticles({ article, updateArtices }) {
       setLoading(true);
       setError("");
       await database.articles.doc(articleId).delete();
-      const updatedArticles = articles.filter(
+      const updatedArticles = userArticles.filter(
         (existingArticle) => existingArticle.id !== article.id
       );
-      setArticles(updatedArticles);
+      setUserArticles(updatedArticles);
       setLoading(false);
     } catch (err) {
       setLoading(false);

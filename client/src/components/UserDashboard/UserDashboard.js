@@ -15,10 +15,11 @@ import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
 
 import { useAuth } from "../../contexts/AuthContext";
+import { useArticles } from "../../contexts/ArticlesContext";
 
 export default function UserDashboard() {
   const { currentUser, setCurrentUser } = useAuth();
-  const [articles, setArticles] = useState();
+  const { setUserArticles, userArticles } = useArticles();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -34,8 +35,7 @@ export default function UserDashboard() {
         const formattedArticles = results.map((result) => {
           return database.formatDocument(result);
         });
-        console.log(formattedArticles);
-        setArticles(formattedArticles);
+        setUserArticles(formattedArticles);
       } catch (err) {
         console.log(err);
         setError("Could not fetch articles! Reload the page to try again");
@@ -114,15 +114,10 @@ export default function UserDashboard() {
         </div>
         <div className="dashboard__content-articles">
           <p>Articles</p>
-          {articles &&
-            articles.map((article, index) => {
-              return (
-                <UserArticle
-                  key={index}
-                  article={article}
-                  updateArtices={{ articles, setArticles }}
-                />
-              );
+          {console.log(userArticles)}
+          {userArticles &&
+            userArticles.map((article, index) => {
+              return <UserArticle key={index} article={article} />;
             })}
         </div>
       </div>
