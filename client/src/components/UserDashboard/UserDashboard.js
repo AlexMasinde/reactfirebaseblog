@@ -114,7 +114,6 @@ export default function UserDashboard() {
         </div>
         <div className="dashboard__content-articles">
           <p>Articles</p>
-          {console.log(userArticles)}
           {userArticles &&
             userArticles.map((article, index) => {
               return <UserArticle key={index} article={article} />;

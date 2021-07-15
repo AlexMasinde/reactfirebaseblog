@@ -2,10 +2,14 @@ import React, { createContext, useContext, useReducer } from "react";
 
 const initialState = {
   userArticles: [],
+  latestArticles: [],
+  latestArticle: [],
 };
 
 const ACTIONS = {
   SET_USER_ARTICLES: "set-user-articles",
+  SET_LATEST_ARTICLES: "set-latest-articles",
+  SET_LATEST_ARTICLE: "set-latest-article",
 };
 
 function reducer(state, action) {
@@ -14,6 +18,16 @@ function reducer(state, action) {
       return {
         ...state,
         userArticles: action.payload,
+      };
+    case ACTIONS.SET_LATEST_ARTICLES:
+      return {
+        ...state,
+        latestArticles: action.payload,
+      };
+    case ACTIONS.SET_LATEST_ARTICLE:
+      return {
+        ...state,
+        latestArticle: action.payload,
       };
     default:
       return state;
@@ -33,9 +47,21 @@ export function ArticlesProvider({ children }) {
     dispatch({ type: ACTIONS.SET_USER_ARTICLES, payload: articles });
   }
 
+  function setLatestArticles(articles) {
+    dispatch({ type: ACTIONS.SET_LATEST_ARTICLES, payload: articles });
+  }
+
+  function setLatestArticle(article) {
+    dispatch({ type: ACTIONS.SET_LATEST_ARTICLE, payload: article });
+  }
+
   const value = {
     setUserArticles,
+    setLatestArticles,
+    setLatestArticle,
     userArticles: state.userArticles,
+    latestArticles: state.latestArticles,
+    latestArticle: state.latestArticle,
   };
 
   return (

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { database } from "../../firebase";
-
 import "./LatestArticles.css";
 
+import { database } from "../../firebase";
+
+import { useArticles } from "../../contexts/ArticlesContext";
+
 import ArticleThumbnail from "../ArticleThumbnail/ArticleThumbnail";
-import LatestArticle from "../LatestArticle/LatestArticle";
 
 export default function LatestArticles() {
-  const [articles, setArticles] = useState([]);
+  const { setLatestArticles, latestArticles } = useArticles();
   const [error, setError] = useState("");
-
-  const [latestArticle, setLatestArticle] = useState();
 
   useEffect(() => {
     const unsubscribe = database.articles
@@ -23,26 +22,22 @@ export default function LatestArticles() {
           documentSnapshot.forEach((doc) => {
             formattedArticles.push(database.formatDocument(doc));
           });
-          const findLatest = formattedArticles.slice(0, 1);
-          setLatestArticle(findLatest);
-          setArticles(formattedArticles);
+          setLatestArticles(formattedArticles);
         },
         (error) => {
           console.log(error);
           setError("Could not fetch articles. Please try again");
         }
       );
+    console.log("rendered");
     return () => unsubscribe();
   }, []);
 
   return (
     <section className="latestArticles__container">
-      {console.log(articles)}
-      <div className="latestArticles__container-latest">
-        <LatestArticle latestArticle={latestArticle} />
-      </div>
+      {console.log(latestArticles)}
       <div className="latestArticles__container-articles">
-        {articles.map((article, index) => {
+        {latestArticles.map((article, index) => {
           return <ArticleThumbnail key={index} article={article} />;
         })}
       </div>
