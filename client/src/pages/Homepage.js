@@ -5,7 +5,7 @@ import "./Homepage.css";
 import Navigation from "../components/Navigation/Navigation";
 
 import LatestArticles from "../components/Latest/LatestArticles";
-import HomepageSidebar from "../components/HomepageSidebar/HomepageSidebar";
+import Footer from "../components/Footer/Footer";
 import CategoriesNav from "../components/CategoriesNav/CategoriesNav";
 
 export default function Homepage() {
@@ -24,7 +24,7 @@ export default function Homepage() {
         </div>
       </section>
       <div className="homepage__footer">
-        <HomepageSidebar />
+        <Footer />
       </div>
     </div>
   );

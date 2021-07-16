@@ -1,11 +1,18 @@
-.latestArticles__container {
+/* .latestArticles__container {
   display: flex;
   flex-direction: column;
+} */
+
+.latestArticles__container {
+  display: flex;
+  width: fit-content;
+  margin: auto;
 }
 
 .latestArticles__container-articles {
   display: grid;
+  min-width: 0;
   grid-template-columns: 1fr 1fr 1fr;
-  column-gap: calc((100% - 840px) / 2);
+  column-gap: 2rem;
   grid-template-rows: auto auto;
 }
