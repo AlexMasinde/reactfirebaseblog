@@ -8,6 +8,7 @@ import Homepage from "./pages/Homepage";
 import CategoriesPage from "./pages/CategoriesPage/CategoriesPage";
 
 import Editor from "./components/Editor/Editor";
+import Login from "./components/Login/Login";
 import Signup from "./components/Singup/Signup";
 import UserDashboard from "./components/UserDashboard/UserDashboard";
 import ArticleView from "./components/ArticleView/ArticleView";
@@ -22,6 +23,7 @@ function App() {
             <Route path="/dashboard" component={UserDashboard} />
             <Route path="/article/:id/:userId" component={ArticleView} />
             <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
             <Route path="/categories/:category" component={CategoriesPage} />
             <Route path="/" component={Homepage} exact />
           </Switch>

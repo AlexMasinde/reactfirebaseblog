@@ -35,7 +35,7 @@ export default function CategoriesPage() {
   }, [category]);
 
   return (
-    <div className="categoriesPage__container">
+    <div className="categoriesPage">
       {console.log(articles)}
       <Navigation />
       <CategoriesNav />

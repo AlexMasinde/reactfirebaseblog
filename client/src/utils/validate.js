@@ -39,3 +39,19 @@ export function validateSingup(username, email, password, confirmPassword) {
     valid: Object.keys(errors).length < 1,
   };
 }
+
+export function validateLogin(email, password) {
+  const errors = {};
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    errors.email = "Please provide a valid email address";
+  }
+  if (password.length < 6) {
+    errors.password = "Password should contain at least six characters";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors) < 1,
+  };
+}

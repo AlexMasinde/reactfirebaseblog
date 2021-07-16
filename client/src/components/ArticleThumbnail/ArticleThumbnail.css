@@ -1,6 +1,6 @@
 .thumbnail__container {
   margin-top: 4rem;
-  width: 280px;
+  width: 315px;
   /* background-color: #fff; */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px;
   transition: 0.5s;
@@ -30,6 +30,6 @@
 
 .thumbnail__container > img {
   height: 210px;
-  width: 280px;
+  width: 315px;
   display: block;
 }

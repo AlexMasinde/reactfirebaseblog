@@ -3,11 +3,13 @@ import React, { createContext, useContext, useReducer } from "react";
 const initialState = {
   userArticles: [],
   latestArticles: [],
+  activeCategory: "",
 };
 
 const ACTIONS = {
   SET_USER_ARTICLES: "set-user-articles",
   SET_LATEST_ARTICLES: "set-latest-articles",
+  SET_ACTIVE_CATEGORY: "set-active-category",
 };
 
 function reducer(state, action) {
@@ -21,6 +23,11 @@ function reducer(state, action) {
       return {
         ...state,
         latestArticles: action.payload,
+      };
+    case ACTIONS.SET_ACTIVE_CATEGORY:
+      return {
+        ...state,
+        activeCategory: action.payload,
       };
     default:
       return state;
@@ -44,9 +51,14 @@ export function ArticlesProvider({ children }) {
     dispatch({ type: ACTIONS.SET_LATEST_ARTICLES, payload: articles });
   }
 
+  function setActiveCategory(category) {
+    dispatch({ type: ACTIONS.SET_ACTIVE_CATEGORY, payload: category });
+  }
   const value = {
     setUserArticles,
     setLatestArticles,
+    setActiveCategory,
+    activeCategory: state.activeCategory,
     userArticles: state.userArticles,
     latestArticles: state.latestArticles,
   };

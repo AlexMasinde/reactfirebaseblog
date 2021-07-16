@@ -18,3 +18,8 @@
   cursor: pointer;
   transform: scale(1.2);
 }
+
+.active-category {
+  background-color: #9f6dcf;
+  color: #ffffff;
+}
