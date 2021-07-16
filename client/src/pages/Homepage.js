@@ -22,10 +22,10 @@ export default function Homepage() {
         <div className="homepage__latestArticles">
           <LatestArticles />
         </div>
-        <div className="homepage__sidebarContainer">
-          <HomepageSidebar />
-        </div>
       </section>
+      <div className="homepage__footer">
+        <HomepageSidebar />
+      </div>
     </div>
   );
 }

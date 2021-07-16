@@ -13,13 +13,20 @@
 .login__header > p {
   width: fit-content;
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 2px;
 }
 
 .login__header > p:first-child {
   border-top: 1px solid #9f6dcf;
   border-bottom: 1px solid #9f6dcf;
+  font-weight: 500;
+  transition: 0.1s;
+}
+
+.login__header > p:first-child:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .login__container > form > label {
@@ -84,6 +91,7 @@
 
 .loadingButton:hover {
   background-color: #000000 !important;
+  color: #ffffff !important;
 }
 
 .loginButton__loading::after {

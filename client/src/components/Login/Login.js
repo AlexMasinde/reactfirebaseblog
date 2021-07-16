@@ -17,10 +17,16 @@ export default function Login() {
 
   function handleEmail(e) {
     setEmail(e.target.value);
+    if (errors) {
+      errors.email = "";
+    }
   }
 
   function handlePassword(e) {
     setPassword(e.target.value);
+    if (errors) {
+      errors.password = "";
+    }
   }
 
   async function handleLogin(e) {
@@ -36,24 +42,31 @@ export default function Login() {
       setLoading(true);
       await userLogin(email, password);
       setLoading(false);
-      history.push("/");
-    } catch (error) {
+      history.push("/dashboard");
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        setErrors({ ...errors, email: "User not found" });
+      }
+      if (err.code === "auth/wrong-password") {
+        setErrors({ ...errors, password: "Wrong password" });
+      }
       setLoading(false);
-      console.log(error);
     }
+  }
+
+  function goHome() {
+    history.push("/");
   }
 
   return (
     <div className="login__container">
       <form onSubmit={(e) => handleLogin(e)}>
         <div className="login__header">
-          <p>IB</p>
+          <p onClick={goHome}>IB</p>
           <p>LOGIN</p>
         </div>
-        <label className={errors.email ? "danger" : ""}>
-          {(errors && errors.email) || (errors && errors.userExists)
-            ? errors.email || errors.userExists
-            : "Email"}
+        <label className={errors && errors.email ? "danger" : ""}>
+          {errors && errors.email ? errors.email : "Email"}
           <input type="email" onChange={(e) => handleEmail(e)} required />
         </label>
         <label className={errors && errors.password ? "danger" : ""}>
@@ -62,9 +75,7 @@ export default function Login() {
         </label>
         <button
           disabled={loading}
-          className={
-            loading ? "loadingButton loginButton__loading" : "loadingButton"
-          }
+          className={loading ? "loadingButton loginButton__loading" : ""}
           type="submit"
         >
           <span className={loading ? "loginLoading__text" : ""}>Login</span>

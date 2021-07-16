@@ -1,23 +1,24 @@
-.homepage__sidebar {
+.footer {
   background-color: #ffffff;
+  display: flex;
 }
 
-.homepage__sidebar-join {
+.footer-join {
   margin-bottom: 4rem;
   border-bottom: 1px solid #000000;
 }
 
-.homepage__sidebar-join > p {
+.footer-join > p {
   line-height: 2rem;
   font-weight: 300;
   margin-top: 1rem;
 }
-.homepage__sidebar-join > h2 {
+.footer-join > h2 {
   border-bottom: 1px solid #000000;
   padding-bottom: 0.5rem;
 }
 
-.homepage__sidebar-join > button {
+.footer-join > button {
   display: block;
   font-weight: 300;
   font-size: 1.2rem;
@@ -29,32 +30,32 @@
   border-radius: 2px;
 }
 
-.homepage__sidebar-join > button:hover {
+.footer-join > button:hover {
   background-color: #000000;
   color: #ffffff;
   cursor: pointer;
 }
 
-.homepage__sidebar-follow > h2,
-.homepage__sidebar-join > h2 {
+.footer-follow > h2,
+.footer-join > h2 {
   font-size: 1.4rem;
   font-weight: 500;
 }
 
-.homepage__sidebar-follow h2 {
+.footer-follow h2 {
   margin-bottom: 1rem;
 }
 
-.homepage__sidebar-follow > a {
+.footer-follow > a {
   display: block;
   text-decoration: none;
 }
 
-.homepage__sidebar-follow {
+.footer-follow {
   margin-top: 2rem;
 }
 
-.homepage__sidebar-follow > a > div {
+.footer-follow > a > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -63,13 +64,13 @@
   padding-bottom: 0.5rem;
 }
 
-.homepage__sidebar-follow > a > div > img {
+.footer-follow > a > div > img {
   width: 20px;
   border-radius: 2px;
 }
 
-.homepage__sidebar-follow > a > div > p,
-.homepage__sidebar-join > p {
+.footer-follow > a > div > p,
+.footer-join > p {
   color: #000000;
   font-size: 1.3rem;
 }

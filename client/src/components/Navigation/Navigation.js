@@ -4,18 +4,23 @@ import { useHistory } from "react-router-dom";
 import "./Navigation.css";
 
 import { useAuth } from "../../contexts/AuthContext";
+import { useArticles } from "../../contexts/ArticlesContext";
 
 export default function Navigation() {
   const { currentUser, userSignout } = useAuth();
+  const { setActiveCategory } = useArticles();
+
   const history = useHistory();
 
   const auth = currentUser ? true : false;
 
   async function handleSignout() {
     await userSignout();
+    history.push("/");
   }
 
   function home() {
+    setActiveCategory("");
     history.push("/");
   }
 
@@ -44,7 +49,7 @@ export default function Navigation() {
         {!auth && (
           <>
             <p onClick={() => history.push("/signup")}>Sign Up</p>
-            <p>Login</p>
+            <p onClick={() => history.push("/login")}>Login</p>
           </>
         )}
       </div>

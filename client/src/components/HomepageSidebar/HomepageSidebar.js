@@ -11,9 +11,9 @@ import linkedinIcon from "../../icons/linkedin.svg";
 export default function HomepageSidebar() {
   const history = useHistory();
   return (
-    <div className="homepage__sidebar">
-      <div className="homepage__sidebar-join">
-        <h2>Join Us</h2>
+    <div className="footer">
+      <div className="footer-join">
+        <h2>Join</h2>
         <p>
           InsightsB provides you with a unique opportunity to write about your
           favorite topics about life and your surroundings. Joining us allows
@@ -21,8 +21,8 @@ export default function HomepageSidebar() {
         </p>
         <button onClick={() => history.push("/signup")}>Sign Up</button>
       </div>
-      <div className="homepage__sidebar-follow">
-        <h2>Follow Us</h2>
+      <div className="footer-follow">
+        <h2>Follow</h2>
         <a
           href="https://github.com/AlexMasinde"
           target="_blank"
