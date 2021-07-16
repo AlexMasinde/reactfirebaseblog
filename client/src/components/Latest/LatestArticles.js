@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 
 import "./LatestArticles.css";
 
@@ -29,16 +30,14 @@ export default function LatestArticles() {
           setError("Could not fetch articles. Please try again");
         }
       );
-    console.log("rendered");
     return () => unsubscribe();
   }, []);
 
   return (
     <section className="latestArticles__container">
-      {console.log(latestArticles)}
       <div className="latestArticles__container-articles">
-        {latestArticles.map((article, index) => {
-          return <ArticleThumbnail key={index} article={article} />;
+        {latestArticles.map((article) => {
+          return <ArticleThumbnail key={nanoid()} article={article} />;
         })}
       </div>
     </section>

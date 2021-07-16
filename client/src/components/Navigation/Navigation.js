@@ -16,7 +16,7 @@ export default function Navigation() {
   }
 
   function home() {
-    history.push("/homepage");
+    history.push("/");
   }
 
   function dashboard() {
