@@ -1,6 +1,6 @@
 .footer {
   padding: 2rem 0;
-  background-color: rgba(0, 0, 0, 0.02);
+  border-top: 1px dotted grey;
   position: absolute;
   bottom: 0%;
   width: 100%;
@@ -21,7 +21,7 @@
 .footer__logo > p {
   font-weight: 400;
   font-size: 1.6rem;
-  padding: 0 8px;
+  padding: 0 5px;
   border-bottom: 1px solid #000000;
   border-top: 1px solid #000000;
 }

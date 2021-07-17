@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 
@@ -12,31 +12,63 @@ import Navigation from "../../components/Navigation/Navigation";
 
 export default function CategoriesPage() {
   const [articles, setArticles] = useState();
+  const [latestDoc, setLatestDoc] = useState();
+  const [lastArticle, setLastArticle] = useState(null);
+  const [count, setCount] = useState(null);
   const { category } = useParams();
 
+  const getArticles = useCallback(
+    async function () {
+      let query = database.articles
+        .where("category", "==", category)
+        .orderBy("createdAt", "desc")
+        .limit(3);
+
+      if (lastArticle) {
+        query = database.articles
+          .where("category", "==", category)
+          .orderBy("createdAt", "desc")
+          .startAfter(lastArticle)
+          .limit(3);
+      }
+
+      const data = await query.get();
+      setLatestDoc(data.docs[data.docs.length - 1]);
+      const formattedArticles = [];
+      data.docs.forEach((doc) => {
+        formattedArticles.push(database.formatDocument(doc));
+      });
+      setArticles(formattedArticles);
+    },
+    [category, lastArticle]
+  );
+
+  const getCount = useCallback(
+    async function () {
+      const data = await database.counter.doc("B2ZJVxfS4FNo31PGf2ew").get();
+      console.log(data.get(category));
+      console.log(category);
+      setCount(data.get(category));
+    },
+    [category]
+  );
+
   useEffect(() => {
-    const unsubscribe = database.articles
-      .where("category", "==", category)
-      .orderBy("createdAt", "desc")
-      .limit(6)
-      .onSnapshot(
-        (documentSnapshot) => {
-          const formattedArticles = [];
-          documentSnapshot.forEach((doc) => {
-            formattedArticles.push(database.formatDocument(doc));
-          });
-          setArticles(formattedArticles);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    return () => unsubscribe();
-  }, [category]);
+    getArticles();
+    console.log("ran getArticles");
+  }, [getArticles]);
+
+  useEffect(() => {
+    getCount();
+    console.log("ran getCount");
+  }, [getCount]);
+
+  function nextPage() {
+    setLastArticle(latestDoc);
+  }
 
   return (
     <div className="categoriesPage">
-      {console.log(articles)}
       <Navigation />
       <CategoriesNav />
       <div></div>
@@ -49,6 +81,7 @@ export default function CategoriesPage() {
             })}
         </div>
       </div>
+      <button onClick={nextPage}>Paginate</button>
     </div>
   );
 }

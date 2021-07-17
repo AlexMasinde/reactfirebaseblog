@@ -28,6 +28,6 @@ export default function useGetAuthor(userId) {
       }
     }
     getAuthor();
-  });
+  }, [userId]);
   return { articleAuthor, authorLoading, authorError };
 }

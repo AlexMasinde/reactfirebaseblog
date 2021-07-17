@@ -20,6 +20,7 @@ export default function LatestArticles() {
       .onSnapshot(
         (documentSnapshot) => {
           const formattedArticles = [];
+          console.log(documentSnapshot);
           documentSnapshot.forEach((doc) => {
             formattedArticles.push(database.formatDocument(doc));
           });

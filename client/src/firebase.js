@@ -17,6 +17,7 @@ const firestore = app.firestore();
 const database = {
   users: firestore.collection("users"),
   articles: firestore.collection("articles"),
+  counter: firestore.collection("counter"),
   formatDocument: (doc) => {
     return { id: doc.id, ...doc.data() };
   },
