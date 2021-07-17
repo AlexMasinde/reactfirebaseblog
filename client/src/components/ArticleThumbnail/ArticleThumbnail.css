@@ -3,6 +3,9 @@
   width: 315px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
   transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .article__card:hover {

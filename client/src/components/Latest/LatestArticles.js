@@ -12,6 +12,7 @@ import ArticleThumbnail from "../ArticleThumbnail/ArticleThumbnail";
 export default function LatestArticles() {
   const { setLatestArticles, latestArticles } = useArticles();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = database.articles
@@ -25,10 +26,12 @@ export default function LatestArticles() {
             formattedArticles.push(database.formatDocument(doc));
           });
           setLatestArticles(formattedArticles);
+          setLoading(false);
         },
         (error) => {
           console.log(error);
-          setError("Could not fetch articles. Please try again");
+          setLoading(false);
+          setError("Could not fetch articles. Please reload to try again");
         }
       );
     return () => unsubscribe();
@@ -36,11 +39,19 @@ export default function LatestArticles() {
 
   return (
     <section className="latestArticles__container">
-      <div className="latestArticles__container-articles">
-        {latestArticles.map((article) => {
-          return <ArticleThumbnail key={nanoid()} article={article} />;
-        })}
-      </div>
+      {loading && <div className="latestArticles__loader"></div>}
+      {!loading && latestArticles && !error && (
+        <div className="latestArticles__container-articles">
+          {latestArticles.map((article) => {
+            return <ArticleThumbnail key={nanoid()} article={article} />;
+          })}
+        </div>
+      )}
+      {error && (
+        <div className="latestArticles__error">
+          <p>{error}</p>
+        </div>
+      )}
     </section>
   );
 }
