@@ -11,7 +11,7 @@ const categories = [
   "Business",
   "Marketing",
   "Jobs",
-  "Econony",
+  "Economy",
 ];
 
 export default categories;

@@ -12,6 +12,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Singup/Signup";
 import UserDashboard from "./components/UserDashboard/UserDashboard";
 import ArticleView from "./components/ArticleView/ArticleView";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Switch>
             <Route path="/add" component={Editor} />
             <Route path="/dashboard" component={UserDashboard} />
+            <Route path="/userprofile/:id" component={UserProfile} />
             <Route path="/article/:id/:userId" component={ArticleView} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />

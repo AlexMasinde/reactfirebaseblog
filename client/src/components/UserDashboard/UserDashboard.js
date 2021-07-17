@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./UserDashboard.css";
 
-import { database } from "../../firebase";
+import { useAuth } from "../../contexts/AuthContext";
+
+import useGetAuthorArticles from "../../Hooks/useGetAuthorArticles";
 
 import Navigation from "../Navigation/Navigation";
 import EditProfile from "../EditProfile/EditProfile";
@@ -14,35 +16,11 @@ import email from "../../icons/email.svg";
 import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
 
-import { useAuth } from "../../contexts/AuthContext";
-import { useArticles } from "../../contexts/ArticlesContext";
-
 export default function UserDashboard() {
   const { currentUser, setCurrentUser } = useAuth();
-  const { setUserArticles, userArticles } = useArticles();
+  const userArticles = useGetAuthorArticles(currentUser?.id);
   const [editing, setEditing] = useState(false);
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    async function getArticles() {
-      try {
-        const data = await database.articles
-          .where("userId", "==", currentUser.id)
-          .orderBy("createdAt", "desc")
-          .get();
-        const results = data.docs;
-        const formattedArticles = results.map((result) => {
-          return database.formatDocument(result);
-        });
-        setUserArticles(formattedArticles);
-      } catch (err) {
-        console.log(err);
-        setError("Could not fetch articles! Reload the page to try again");
-      }
-    }
-    getArticles();
-  }, [currentUser.id]);
 
   return (
     <div className="dashboard__container">
@@ -76,36 +54,36 @@ export default function UserDashboard() {
                   </span>
                   {currentUser?.email}
                 </p>
-                {currentUser.bio && (
+                {currentUser?.bio && (
                   <p>
                     <span>
                       <img src={pen} alt="User bio" />
                     </span>
-                    {currentUser.bio}
+                    {currentUser?.bio}
                   </p>
                 )}
-                {currentUser.twitter && (
+                {currentUser?.twitter && (
                   <p>
                     <span>
                       <img src={twitter} alt="User twitter" />
                     </span>
-                    {currentUser.twitter}
+                    {currentUser?.twitter}
                   </p>
                 )}
-                {currentUser.facebook && (
+                {currentUser?.facebook && (
                   <p>
                     <span>
                       <img src={facebook} alt="User facebook" />
                     </span>
-                    {currentUser.facebook}
+                    {currentUser?.facebook}
                   </p>
                 )}
-                {currentUser.website && (
+                {currentUser?.website && (
                   <p>
                     <span>
                       <img src={global} alt="User website" />
                     </span>
-                    {currentUser.website}
+                    {currentUser?.website}
                   </p>
                 )}
               </div>

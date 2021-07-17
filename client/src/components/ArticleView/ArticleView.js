@@ -14,24 +14,18 @@ export default function ArticleView() {
   const { id, userId } = useParams();
 
   const [article, setArticle] = useState();
-  const [articleLoading, setArticleLoading] = useState(false);
-  const [articleError, setArticleError] = useState();
 
   useEffect(() => {
     async function getArticle() {
       try {
-        setArticleError("");
         const data = await database.articles.doc(id).get();
         setArticle(database.formatDocument(data));
-      } catch (err) {
-        console.log(err);
-        setArticleError("Could not retrieve article! Please try again");
-      }
+      } catch (err) {}
     }
     getArticle();
   }, [id]);
 
-  const { articleAuthor, authorError, authorLoading } = useGetAuthor(userId);
+  const { articleAuthor, authorError } = useGetAuthor(userId);
 
   return (
     <div className="articleView__container">

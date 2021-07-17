@@ -12,7 +12,7 @@ export default function AuthorDetails({ author }) {
   const history = useHistory();
 
   function userProfile() {
-    history.push("/dashboard");
+    history.push(`/userprofile/${articleAuthor.id}`);
   }
 
   return (
