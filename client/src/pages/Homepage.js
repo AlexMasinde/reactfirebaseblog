@@ -23,9 +23,6 @@ export default function Homepage() {
           <LatestArticles />
         </div>
       </section>
-      <div className="homepage__footer">
-        <Footer />
-      </div>
     </div>
   );
 }

@@ -10,7 +10,6 @@ import UserArticle from "../UserArticles/UserArticle";
 
 import facebook from "../../icons/facebook.svg";
 import twitter from "../../icons/twitter.svg";
-import email from "../../icons/email.svg";
 import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
 
