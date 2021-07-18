@@ -40,6 +40,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    loading,
     setCurrentUser,
     userSignup,
     userSignout,
@@ -47,8 +48,11 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
+    <>
+      {loading && <div className="latestArticles__loader"></div>}
+      {!loading && (
+        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+      )}
+    </>
   );
 }
