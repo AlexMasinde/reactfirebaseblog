@@ -16,10 +16,13 @@ export default function CategoriesPage() {
   const [lastArticle, setLastArticle] = useState(null);
   const [pages, setPages] = useState();
   const [activePage, setActivePage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { category } = useParams();
 
   const getArticles = useCallback(
     async function () {
+      setLoading(true);
       let query = database.articles
         .where("category", "==", category)
         .orderBy("createdAt", "desc")
@@ -38,6 +41,7 @@ export default function CategoriesPage() {
         formattedArticles.push(database.formatDocument(doc));
       });
       setArticles(formattedArticles);
+      setLoading(false);
     },
     [category, lastArticle]
   );
@@ -60,7 +64,8 @@ export default function CategoriesPage() {
       getArticles();
       getPages();
     } catch (err) {
-      console.log(err);
+      setLoading(false);
+      setError("No articles found! Please reload the page to try again");
     }
   }, [getArticles, getPages]);
 
@@ -78,13 +83,8 @@ export default function CategoriesPage() {
       {console.log(pages)}
       <Navigation />
       <CategoriesNav />
-      {!articles ||
-        (!pages && (
-          <div>
-            <p>Loading...</p>
-          </div>
-        ))}
-      {articles && pages && (
+      {loading && <div className="latestArticles__loader"></div>}
+      {articles && pages && !loading && (
         <div className="categoriesPage__container">
           <p>{category.toUpperCase()}</p>
           <div className="categoriesPage__grid">
@@ -95,6 +95,7 @@ export default function CategoriesPage() {
           </div>
           <div className="categoriesPage__pages">
             {pages.length > 1 &&
+              !loading &&
               pages.map((page) => {
                 return (
                   <p
@@ -108,6 +109,10 @@ export default function CategoriesPage() {
           </div>
         </div>
       )}
+      {!loading && articles && articles.length < 1 && (
+        <div className="latestArticles__error">{`No articles on ${category} yet`}</div>
+      )}
+      {error && <div className="latestArticles__error">{error}</div>}
     </div>
   );
 }

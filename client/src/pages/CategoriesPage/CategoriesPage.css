@@ -2,8 +2,14 @@
   width: 100rem;
   margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: repeat(4, 315px);
+  column-gap: 2rem;
+  justify-content: left;
+}
+
+.categoriesPage__container {
+  width: fit-content;
+  margin: auto;
 }
 
 .categoriesPage__container {

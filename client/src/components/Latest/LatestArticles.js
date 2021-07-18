@@ -12,7 +12,7 @@ import ArticleThumbnail from "../ArticleThumbnail/ArticleThumbnail";
 export default function LatestArticles() {
   const { setLatestArticles, latestArticles } = useArticles();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = database.articles

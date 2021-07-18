@@ -7,9 +7,10 @@
 .latestArticles__container-articles {
   display: grid;
   min-width: 0;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   column-gap: 2rem;
   grid-template-rows: auto auto;
+  justify-content: start;
 }
 
 .latestArticles__loader {

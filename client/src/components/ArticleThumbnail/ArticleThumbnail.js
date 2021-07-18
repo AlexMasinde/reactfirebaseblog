@@ -24,7 +24,6 @@ export default function ArticleThumbnail({ article }) {
 
   return (
     <div onClick={viewArticle} className="article__card">
-      {console.log(articleAuthor)}
       {!articleAuthor && !article && <div>Loading..</div>}
       {articleAuthor && article && (
         <div className="article__card-content">
