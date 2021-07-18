@@ -54,6 +54,7 @@ export function ArticlesProvider({ children }) {
   function setActiveCategory(category) {
     dispatch({ type: ACTIONS.SET_ACTIVE_CATEGORY, payload: category });
   }
+
   const value = {
     setUserArticles,
     setLatestArticles,

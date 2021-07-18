@@ -41,12 +41,11 @@
 .latest__title {
   font-size: 1.4rem;
   margin-bottom: 2rem;
-  margin-top: 2rem;
-  color: grey;
-  font-weight: 300;
+  font-weight: 400;
   width: 100%;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+  border-top: 1px dotted rgba(0, 0, 0, 0.1);
 }
 
 @keyframes spinner {

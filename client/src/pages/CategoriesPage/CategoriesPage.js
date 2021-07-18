@@ -9,6 +9,7 @@ import { database } from "../../firebase";
 import CategoriesNav from "../../components/CategoriesNav/CategoriesNav";
 import ArticleThumbnail from "../../components/ArticleThumbnail/ArticleThumbnail";
 import Navigation from "../../components/Navigation/Navigation";
+import fetchCount from "../../utils/fetchCount";
 
 export default function CategoriesPage() {
   const [articles, setArticles] = useState();
@@ -48,12 +49,8 @@ export default function CategoriesPage() {
 
   const getPages = useCallback(
     async function () {
-      const data = await database.counter.doc("B2ZJVxfS4FNo31PGf2ew").get();
-      const numberOfPages = Math.ceil(data.get(category) / 3);
-      const pagesArray = [];
-      for (let i = 1; i <= numberOfPages; i++) {
-        pagesArray.push(i);
-      }
+      const articlesPerPage = 3;
+      const pagesArray = await fetchCount(category, articlesPerPage);
       setPages(pagesArray);
     },
     [category]
@@ -99,6 +96,7 @@ export default function CategoriesPage() {
               pages.map((page) => {
                 return (
                   <p
+                    key={nanoid()}
                     onClick={() => nextPage(page)}
                     className={page === activePage ? "activepage" : ""}
                   >

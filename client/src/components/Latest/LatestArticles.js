@@ -34,7 +34,6 @@ export default function LatestArticles() {
           setError("Could not fetch articles. Please reload to try again");
         }
       );
-    console.log("run");
     return () => unsubscribe();
   }, []);
 
