@@ -2,6 +2,7 @@
   display: flex;
   width: fit-content;
   margin: auto;
+  animation: opacity 1s linear;
 }
 
 .latestArticles__container-articles {
@@ -28,6 +29,26 @@
   animation: spinner 1s linear infinite;
 }
 
+.latestArticles__error {
+  position: absolute;
+  top: 30%;
+  right: 50%;
+  transform: translateX(50%);
+  font-size: 1.6rem;
+  color: gray;
+}
+
+.latest__title {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  color: grey;
+  font-weight: 300;
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+}
+
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
@@ -37,11 +58,11 @@
   }
 }
 
-.latestArticles__error {
-  position: absolute;
-  top: 30%;
-  right: 50%;
-  transform: translateX(50%);
-  font-size: 1.6rem;
-  color: gray;
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -25,7 +25,7 @@ export default function CategoriesNav() {
             }}
             key={nanoid()}
           >
-            {category}
+            {category.toUpperCase()}
           </p>
         );
       })}

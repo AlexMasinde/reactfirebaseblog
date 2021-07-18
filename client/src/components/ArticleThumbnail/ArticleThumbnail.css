@@ -1,11 +1,11 @@
 .article__card {
-  margin-top: 4rem;
   width: 315px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
   transition: 0.5s;
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-bottom: 4rem;
 }
 
 .article__card:hover {

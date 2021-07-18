@@ -2,12 +2,13 @@
   display: flex;
   width: 70%;
   justify-content: space-around;
-  margin: 0 auto 3rem;
+  margin: 0 auto 2rem;
 }
 
 .navigation__categories > p {
   padding: 3px 10px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  color: grey;
   font-weight: 300;
   transition: 0.1s;
   border-radius: 2px;

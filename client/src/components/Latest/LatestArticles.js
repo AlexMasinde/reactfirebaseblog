@@ -42,10 +42,13 @@ export default function LatestArticles() {
     <section className="latestArticles__container">
       {loading && <div className="latestArticles__loader"></div>}
       {!loading && latestArticles && !error && (
-        <div className="latestArticles__container-articles">
-          {latestArticles.map((article) => {
-            return <ArticleThumbnail key={nanoid()} article={article} />;
-          })}
+        <div>
+          <p className="latest__title">LATEST ARTICLES</p>
+          <div className="latestArticles__container-articles">
+            {latestArticles.map((article) => {
+              return <ArticleThumbnail key={nanoid()} article={article} />;
+            })}
+          </div>
         </div>
       )}
       {error && (

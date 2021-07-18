@@ -1,3 +1,7 @@
+.articleview__content {
+  animation: opacity 1s linear;
+}
+
 .articleview__loader {
   position: absolute;
   bottom: 50%;
@@ -20,4 +24,13 @@
   transform: translateX(50%);
   font-size: 1.6rem;
   color: gray;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }

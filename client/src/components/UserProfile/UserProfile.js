@@ -18,7 +18,7 @@ import pen from "../../icons/pen.svg";
 export default function UserProfile() {
   const { id } = useParams();
   const { articleAuthor, authorLoading, authorError } = useGetAuthor(id);
-  const { userArticles, loading, error } = useGetAuthorArticles(id);
+  const { userArticles, articlesLoading, error } = useGetAuthorArticles(id);
   const currentUser = articleAuthor;
 
   return (
@@ -28,7 +28,7 @@ export default function UserProfile() {
         <Navigation />
       </div>
       <div className="dashboard__content">
-        {articleAuthor && !authorLoading && !loading && (
+        {articleAuthor && !authorLoading && !articlesLoading && (
           <div className="dashboard__content-profile">
             <div className="dashboard__content-profileImage">
               <img
@@ -75,21 +75,21 @@ export default function UserProfile() {
             </div>
           </div>
         )}
-        {loading && authorLoading && (
+        {articlesLoading && authorLoading && (
           <div className="userprofile__loader"></div>
         )}
-        {userArticles && !loading && !authorLoading && (
+        {userArticles && !articlesLoading && !authorLoading && (
           <div className="dashboard__content-articles">
             <p>Articles</p>
             {userArticles &&
-              !loading &&
+              !articlesLoading &&
               userArticles.map((article) => {
                 return <UserArticle key={nanoid()} article={article} />;
               })}
           </div>
         )}
         {error && <div className="userprofile__error">{error}</div>}
-        {!loading && userArticles.length < 1 && (
+        {!articlesLoading && userArticles.length < 1 && (
           <div className="userprofile__error">
             No articles written by this user
           </div>

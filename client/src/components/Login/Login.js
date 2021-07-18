@@ -42,7 +42,7 @@ export default function Login() {
       setLoading(true);
       await userLogin(email, password);
       setLoading(false);
-      history.push("/dashboard");
+      history.push("/");
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         setErrors({ ...errors, email: "User not found" });

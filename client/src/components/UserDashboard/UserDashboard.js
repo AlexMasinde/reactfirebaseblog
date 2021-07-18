@@ -15,10 +15,11 @@ import twitter from "../../icons/twitter.svg";
 import email from "../../icons/email.svg";
 import global from "../../icons/global.svg";
 import pen from "../../icons/pen.svg";
+import { nanoid } from "nanoid";
 
 export default function UserDashboard() {
-  const { currentUser, setCurrentUser } = useAuth();
-  const { userArticles, loading, error } = useGetAuthorArticles(
+  const { currentUser, setCurrentUser, loading } = useAuth();
+  const { userArticles, articlesLoading, error } = useGetAuthorArticles(
     currentUser?.id
   );
   const [editing, setEditing] = useState(false);
@@ -90,18 +91,20 @@ export default function UserDashboard() {
             </div>
           )}
         </div>
-        {loading && <div className="latestArticles__loader"></div>}
+        {articlesLoading && userArticles.length < 1 && (
+          <div className="latestArticles__loader"></div>
+        )}
         {userArticles && (
           <div className="dashboard__content-articles">
             <p>Articles</p>
             {userArticles &&
-              userArticles.map((article, index) => {
-                return <UserArticle key={index} article={article} />;
+              userArticles.map((article) => {
+                return <UserArticle key={nanoid()} article={article} />;
               })}
           </div>
         )}
         {error && <div className="latestArticles__error">{error}</div>}
-        {!loading && userArticles.length < 1 && (
+        {!articlesLoading && userArticles.length < 1 && (
           <div className="latestArticles__error">No article written yet</div>
         )}
       </div>

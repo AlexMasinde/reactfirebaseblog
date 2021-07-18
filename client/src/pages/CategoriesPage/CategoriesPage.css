@@ -10,10 +10,7 @@
 .categoriesPage__container {
   width: fit-content;
   margin: auto;
-}
-
-.categoriesPage__container {
-  margin: auto;
+  animation: opacity 1s linear;
 }
 
 .categoriesPage__container > p {
@@ -47,4 +44,13 @@
 .activepage {
   background-color: #000000 !important;
   color: #ffffff !important;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
