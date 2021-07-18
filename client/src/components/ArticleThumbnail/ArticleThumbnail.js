@@ -27,7 +27,7 @@ export default function ArticleThumbnail({ article }) {
       {!articleAuthor && !article && <div>Loading..</div>}
       {articleAuthor && article && (
         <div className="article__card-content">
-          <img src={small} alt={title} />
+          <img src={small} alt={title} loading="lazy" />
           <div className="thumbnail__container-text">
             <p>{category}</p>
             <h2>{trimmedTitle}</h2>
@@ -37,6 +37,7 @@ export default function ArticleThumbnail({ article }) {
             <img
               src={articleAuthor?.profilePicture.url}
               alt={articleAuthor?.username}
+              loading="lazy"
             />
             <p>{articleAuthor?.username}</p>
           </div>

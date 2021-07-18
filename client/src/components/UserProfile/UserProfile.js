@@ -28,7 +28,7 @@ export default function UserProfile() {
         <Navigation />
       </div>
       <div className="dashboard__content">
-        {articleAuthor && !authorLoading && !articlesLoading && (
+        {articleAuthor && !authorLoading && !articlesLoading && !authorError && (
           <div className="dashboard__content-profile">
             <div className="dashboard__content-profileImage">
               <img

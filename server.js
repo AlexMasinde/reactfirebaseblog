@@ -23,7 +23,7 @@ app.post("/api/postuploads", async (req, res) => {
     const file = req.files.file;
     const postId = `blogimages/posts/${uuid()}`;
     const result = await uploadBuffer(file.path, postId);
-    const secureUrl = result.eager[0].secure_url;
+    const secureUrl = result.secure_url;
     const publicId = result.public_id;
     res.status(201).send({ url: secureUrl, publicId: publicId });
   } catch (err) {

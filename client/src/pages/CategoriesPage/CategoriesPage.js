@@ -13,12 +13,13 @@ import fetchCount from "../../utils/fetchCount";
 
 export default function CategoriesPage() {
   const [articles, setArticles] = useState();
+  const [pages, setPages] = useState();
+  const [loading, setLoading] = useState(false);
   const [latestDoc, setLatestDoc] = useState();
   const [lastArticle, setLastArticle] = useState(null);
-  const [pages, setPages] = useState();
   const [activePage, setActivePage] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const { category } = useParams();
 
   const getArticles = useCallback(

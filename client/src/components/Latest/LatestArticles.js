@@ -17,7 +17,7 @@ export default function LatestArticles() {
   useEffect(() => {
     const unsubscribe = database.articles
       .orderBy("createdAt", "desc")
-      .limit(6)
+      .limit(8)
       .onSnapshot(
         (documentSnapshot) => {
           const formattedArticles = [];

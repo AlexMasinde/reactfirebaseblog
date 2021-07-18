@@ -1,7 +1,12 @@
-import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
+
 import { database } from "../../firebase";
+
+import { useArticles } from "../../contexts/ArticlesContext";
+
 import fetchCount from "../../utils/fetchCount";
+
 import ArticleThumbnail from "../ArticleThumbnail/ArticleThumbnail";
 
 import "./AllArticles.css";
@@ -15,17 +20,19 @@ export default function AllArticles() {
   const [activePage, setActivePage] = useState(1);
   const [error, setError] = useState("");
 
+  const { latestArticles } = useArticles();
+
   useEffect(() => {
     async function getArticles() {
       try {
         setLoading(true);
-        const query = database.articles.limit(3);
+        let query = database.articles.limit(12);
         if (lastArticle) {
-          query = database.articles.startAfter(lastArticle).limit(3);
+          query = database.articles.startAfter(lastArticle).limit(12);
         }
         const data = await query.get();
         const category = "allArticles";
-        const articlesPerPage = 3;
+        const articlesPerPage = 12;
         const pagesArray = await fetchCount(category, articlesPerPage);
         setPages(pagesArray);
         setLastDoc(data.docs[data.docs.length - 1]);
@@ -57,15 +64,15 @@ export default function AllArticles() {
 
   return (
     <div className="allarticles__container">
-      {console.log(articles)}
-      <div className="allarticles__title">
-        <p>All Articles</p>
-      </div>
+      {loading && latestArticles && <div className="allarticles__loader"></div>}
       {articles && !loading && (
-        <div className="allarticles__grid">
-          {articles.map((article) => {
-            return <ArticleThumbnail article={article} />;
-          })}
+        <div className="allarticles__content">
+          <p className="allarticles__title">ALL ARTICLES</p>
+          <div className="allarticles__grid">
+            {articles.map((article) => {
+              return <ArticleThumbnail article={article} />;
+            })}
+          </div>
         </div>
       )}
       {!loading && pages && pages.length > 1 && (
@@ -81,6 +88,11 @@ export default function AllArticles() {
               </p>
             );
           })}
+        </div>
+      )}
+      {error && (
+        <div className="allarticles__error">
+          <p>{error}</p>
         </div>
       )}
     </div>

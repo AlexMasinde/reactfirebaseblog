@@ -26,7 +26,7 @@ export default function ArticleView() {
         setLoading(false);
       } catch (err) {
         setError("Could not load article! Refresh page to try again");
-        console.log(error);
+        console.log(err);
         setLoading(false);
       }
     }

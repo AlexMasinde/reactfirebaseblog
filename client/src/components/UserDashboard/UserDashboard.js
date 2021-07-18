@@ -18,7 +18,7 @@ import pen from "../../icons/pen.svg";
 import { nanoid } from "nanoid";
 
 export default function UserDashboard() {
-  const { currentUser, setCurrentUser, loading } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const { userArticles, articlesLoading, error } = useGetAuthorArticles(
     currentUser?.id
   );

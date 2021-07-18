@@ -56,6 +56,11 @@ export default function UserArticles({ article }) {
             <span className={loading ? "loading__text" : ""}>Delete</span>
           </button>
         )}
+        {error && (
+          <div className="userArticle__error">
+            <p>{error}</p>
+          </div>
+        )}
       </div>
     </div>
   );
