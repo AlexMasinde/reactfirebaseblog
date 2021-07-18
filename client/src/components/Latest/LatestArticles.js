@@ -12,7 +12,7 @@ import ArticleThumbnail from "../ArticleThumbnail/ArticleThumbnail";
 export default function LatestArticles() {
   const { setLatestArticles, latestArticles } = useArticles();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = database.articles
@@ -34,6 +34,7 @@ export default function LatestArticles() {
           setError("Could not fetch articles. Please reload to try again");
         }
       );
+    console.log("run");
     return () => unsubscribe();
   }, []);
 

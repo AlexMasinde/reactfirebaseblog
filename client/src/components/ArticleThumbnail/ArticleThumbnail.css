@@ -5,17 +5,17 @@
   transition: 0.5s;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  position: relative;
 }
 
 .article__card:hover {
-  opacity: 0.8;
+  transform: translateY(-4px);
   cursor: pointer;
 }
 
 .thumbnail__container-text {
   height: 40%;
-  padding: 1rem;
+  padding: 1rem 1rem 4rem 1rem;
 }
 
 .thumbnail__container-text > p {
@@ -51,8 +51,9 @@
   margin-left: 1rem;
 }
 .article__content-author {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 1rem;
   display: flex;
   align-items: center;
-  padding: 1rem;
-  margin-top: 0.5rem;
 }

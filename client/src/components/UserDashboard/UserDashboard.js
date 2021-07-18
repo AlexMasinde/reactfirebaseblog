@@ -18,9 +18,10 @@ import pen from "../../icons/pen.svg";
 
 export default function UserDashboard() {
   const { currentUser, setCurrentUser } = useAuth();
-  const userArticles = useGetAuthorArticles(currentUser?.id);
+  const { userArticles, loading, error } = useGetAuthorArticles(
+    currentUser?.id
+  );
   const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   return (
     <div className="dashboard__container">
@@ -39,7 +40,6 @@ export default function UserDashboard() {
           {editing && (
             <EditProfile
               setEditing={setEditing}
-              setLoading={setLoading}
               setCurrentUser={setCurrentUser}
               currentUser={currentUser}
             />
@@ -90,13 +90,20 @@ export default function UserDashboard() {
             </div>
           )}
         </div>
-        <div className="dashboard__content-articles">
-          <p>Articles</p>
-          {userArticles &&
-            userArticles.map((article, index) => {
-              return <UserArticle key={index} article={article} />;
-            })}
-        </div>
+        {loading && <div className="latestArticles__loader"></div>}
+        {userArticles && (
+          <div className="dashboard__content-articles">
+            <p>Articles</p>
+            {userArticles &&
+              userArticles.map((article, index) => {
+                return <UserArticle key={index} article={article} />;
+              })}
+          </div>
+        )}
+        {error && <div className="latestArticles__error">{error}</div>}
+        {!loading && userArticles.length < 1 && (
+          <div className="latestArticles__error">No article written yet</div>
+        )}
       </div>
     </div>
   );

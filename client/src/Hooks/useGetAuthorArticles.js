@@ -1,12 +1,16 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useArticles } from "../contexts/ArticlesContext";
 import { database } from "../firebase";
 
 export default function useGetAuthorArticles(userId) {
   const { setUserArticles, userArticles } = useArticles();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const getArticles = useCallback(
     async function () {
       try {
+        setLoading(true);
         const data = await database.articles
           .where("userId", "==", userId)
           .orderBy("createdAt", "desc")
@@ -16,7 +20,10 @@ export default function useGetAuthorArticles(userId) {
           formattedArticles.push(database.formatDocument(doc));
         });
         setUserArticles(formattedArticles);
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
+        setError("Could not fetch articles! refresh to try again");
         console.log(err);
       }
     },
@@ -27,5 +34,5 @@ export default function useGetAuthorArticles(userId) {
     getArticles();
   }, [getArticles]);
 
-  return userArticles;
+  return { userArticles, loading, error };
 }
