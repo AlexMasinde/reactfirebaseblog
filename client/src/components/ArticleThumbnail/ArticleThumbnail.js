@@ -20,6 +20,7 @@ export default function ArticleThumbnail({ article }) {
 
   return (
     <div onClick={viewArticle} className={ArticleThumbnailStyles.container}>
+      {console.log(article)}
       <div className={ArticleThumbnailStyles.image}>
         <img src={small} alt={title} loading="lazy" />
       </div>
