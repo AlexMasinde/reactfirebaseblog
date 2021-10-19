@@ -1,0 +1,37 @@
+.container {
+  width: 85.8em;
+  display: flex;
+  margin-bottom: 6.3rem;
+}
+
+.container > * + * {
+  margin-left: 5.5rem;
+}
+
+.image > img {
+  width: 34em;
+  height: 27.2em;
+}
+.text > h2 {
+  font-size: 3.3rem;
+  line-height: 4.1rem;
+  font-weight: 700;
+}
+
+.text > span {
+  margin: 1.2rem 0;
+  display: inline-block;
+  color: rgba(28, 28, 28, 0.5);
+  line-height: 2.2rem;
+  font-size: 1.6rem;
+}
+
+.text > p {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+.category {
+  color: rgba(28, 28, 28, 0.5);
+  line-height: 2.7rem;
+  font-size: 2rem;
+}

@@ -24,7 +24,7 @@ const uploadProfilePicture = async (file, publicId) => {
 const uploadBuffer = async (file, publicId) => {
   const upload = await cloudinary.uploader.upload(file, {
     public_id: publicId,
-    width: 800,
+    width: 854,
     format: "jpg",
   });
   return upload;
@@ -35,7 +35,7 @@ const uploadCoverImages = async (file) => {
     responsive_breakpoints: {
       create_derived: true,
       min_width: 340,
-      max_width: 800,
+      max_width: 854,
       transformation: { format: "jpg" },
       max_images: 3,
     },

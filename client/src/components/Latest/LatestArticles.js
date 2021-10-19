@@ -15,26 +15,24 @@ export default function LatestArticles() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = database.articles
-      .orderBy("createdAt", "desc")
-      .limit(8)
-      .onSnapshot(
-        (documentSnapshot) => {
-          const formattedArticles = [];
-          console.log(documentSnapshot);
-          documentSnapshot.forEach((doc) => {
-            formattedArticles.push(database.formatDocument(doc));
-          });
-          setLatestArticles(formattedArticles);
-          setLoading(false);
-        },
-        (error) => {
-          console.log(error);
-          setLoading(false);
-          setError("Could not fetch articles. Please reload to try again");
-        }
-      );
-    return () => unsubscribe();
+    async function fetchArticles() {
+      try {
+        setLoading(true);
+        const rawArticles = await database.articles
+          .orderBy("createdAt", "desc")
+          .limit(8)
+          .get();
+        const formattedArticles = rawArticles.docs.map((article) => {
+          return database.formatDocument(article);
+        });
+        setLatestArticles(formattedArticles);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    }
+    fetchArticles();
   }, []);
 
   return (
