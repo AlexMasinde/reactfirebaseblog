@@ -7,16 +7,6 @@
   min-height: 557px;
 }
 
-.allarticles__grid {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 2rem;
-  grid-template-rows: auto auto;
-  justify-content: start;
-  animation: opacity 1s linear;
-}
-
 .allarticles__pages {
   display: flex;
   justify-content: center;

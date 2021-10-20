@@ -1,16 +1,17 @@
 .container {
-  width: 85.8em;
+  width: fit-content;
   display: flex;
   margin-bottom: 6.3rem;
-}
-
-.container > * + * {
-  margin-left: 5.5rem;
 }
 
 .image > img {
   width: 34em;
   height: 27.2em;
+}
+
+.text {
+  width: 43rem;
+  margin-left: 5.5rem;
 }
 .text > h2 {
   font-size: 3.3rem;

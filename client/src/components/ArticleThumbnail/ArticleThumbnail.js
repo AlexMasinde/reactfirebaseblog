@@ -28,7 +28,7 @@ export default function ArticleThumbnail({ article }) {
         <p className={ArticleThumbnailStyles.category}>{category}</p>
         <h2>{trimmedTitle}</h2>
         <span>Leslie Pena . April 25, 2012</span>
-        <p className="tagline-text">{trimmedTagline}</p>
+        <p>{trimmedTagline}</p>
       </div>
     </div>
   );
