@@ -9,7 +9,7 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Navigation from "../Navigation/Navigation";
 
-import usericon from "../../icons/usericon.svg";
+import emailicon from "../../icons/emailicon.svg";
 import passwordicon from "../../icons/passwordicon.svg";
 
 import LoginStyles from "./Login.module.css";
@@ -76,7 +76,7 @@ export default function Login() {
         <form onSubmit={(e) => handleLogin(e)}>
           <Input
             type="text"
-            icon={usericon}
+            icon={emailicon}
             placeholder="Email"
             alt="Email"
             onChange={handleEmail}

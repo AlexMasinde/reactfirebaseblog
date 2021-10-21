@@ -5,7 +5,15 @@ import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
 
 import { validateSingup } from "../../utils/validate";
+
 import uploadProfilePhoto from "../../utils/uploadProfilePhoto";
+
+import emailicon from "../../icons/emailicon.svg";
+import passwordicon from "../../icons/passwordicon.svg";
+import usericon from "../../icons/usericon.svg";
+
+import Input from "../Input/Input";
+import Button from "../Button/Button";
 
 import SignupStyles from "./Signup.module.css";
 
@@ -26,6 +34,8 @@ export default function Singup() {
   const [loading, setLoading] = useState(false);
 
   const [displayFiileName, setDisplayFileName] = useState("Profile Photo");
+
+  const authError = errors && errors.auth;
 
   function handleUsername(e) {
     const username = e.target.value;
@@ -121,57 +131,44 @@ export default function Singup() {
   }
 
   return (
-    <div className="signup__container">
-      <div className="signup__container-header">
-        <div className="navigation__container-logo">
-          <p>IB</p>
-        </div>
-      </div>
-      <div className="signup__container-form">
-        <h1>Create your Insights Account</h1>
+    <div className={SignupStyles.container}>
+      <div className={SignupStyles.formcontainer}>
+        <h1>Welcome!</h1>
+        <p className={authError ? SignupStyles.red : ""}>
+          {authError ? errors.auth : "Sign up to get the most out of IB"}
+        </p>
         <form onSubmit={(e) => handleSignup(e)}>
-          <label className={errors && errors.username ? "danger" : ""}>
-            {errors && errors.username ? errors.username : "Username"}
-            <input type="text" onChange={(e) => handleUsername(e)} required />
-          </label>
-          <label className={errors.email ? "danger" : ""}>
-            {(errors && errors.email) || (errors && errors.userExists)
-              ? errors.email
-              : "Email"}
-            <input type="email" onChange={(e) => handleEmail(e)} required />
-          </label>
-          <label className={errors && errors.password ? "danger" : ""}>
-            {errors && errors.password ? errors.password : "Password"}
-            <input
-              type="password"
-              onChange={(e) => handlePassword(e)}
-              required
-            />
-          </label>
-          <label className={errors && errors.confirmPassword ? "danger" : ""}>
-            {errors && errors.confirmPassword
-              ? errors.confirmPassword
-              : "Confirm Password"}
-            <input
-              type="password"
-              onChange={(e) => handleConfirmPassword(e)}
-              required
-            />
-          </label>
-          <div className="singup__container-formFile">
+          <Input
+            type="text"
+            icon={usericon}
+            placeholder="Username"
+            alt="username"
+            onChange={handleUsername}
+          />
+          <Input
+            type="email"
+            icon={emailicon}
+            placeholder="Email"
+            alt="Email"
+            onChange={handleEmail}
+          />
+          {errors && errors.email && <p>{errors.email}</p>}
+          <Input
+            type="password"
+            icon={passwordicon}
+            placeholder="Password"
+            alt="Password"
+            onChange={handlePassword}
+          />
+          {errors && errors.password && <p>{errors.password}</p>}
+          <div className={SignupStyles.file}>
             <label>
               <input type="file" onChange={(e) => handleFile(e)} />
               <span>{displayFiileName}</span>
               <p>Browse</p>
             </label>
           </div>
-          <button
-            disabled={loading}
-            className={`signup__control ${loading ? "button__loading" : ""}`}
-            type="submit"
-          >
-            <span className={loading ? "loading__text" : ""}>Sign Up</span>
-          </button>
+          <Button type="submit" loading={loading} text="Signup" />
         </form>
       </div>
     </div>

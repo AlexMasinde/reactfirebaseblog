@@ -1,131 +1,65 @@
-.signup__container {
-  display: flex;
-  flex-direction: column;
-  max-width: 45rem;
-  margin: auto;
+.formcontainer {
+  width: 32.4em;
+  margin: 20em auto 0;
 }
 
-.signup__container-header {
-  width: fit-content;
-  margin: 7rem auto 5rem 0;
+.formcontainer > h1 {
+  font-size: 3.3rem;
+  line-height: 4.1rem;
+  font-weight: 700;
+  margin-bottom: 1.4rem;
+  text-align: center;
 }
 
-.signup__container-form {
-  width: 45rem;
-  border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 6px;
-  padding: 24px 36px;
-}
-
-.signup__container-form > h1 {
-  font-size: 1.4rem;
-  font-weight: 500;
-  width: fit-content;
-  margin: auto;
-}
-
-.signup__container-form > form > label,
-.editprofile__details > label {
-  font-size: 1.4rem;
-  font-weight: 300;
-}
-
-.signup__container-form > form > label {
-  margin-top: 3rem;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.signup__container-form > form > label > input {
-  height: 3.5rem;
-  border: 1px solid rgb(159, 165, 173, 0.2);
-  outline: none;
-  margin-top: 1rem;
-  border-radius: 4px;
+.formcontainer > p {
   font-size: 1.6rem;
-  padding: 3px 6px;
+  line-height: 2.4rem;
+  margin-bottom: 2.3rem;
+  text-align: center;
 }
 
-.signup__container-form > form > button {
-  width: 100%;
-  padding: 8px 0;
-  margin: 2rem auto 0;
-}
-
-.signup__container-form > form > button,
-.userArticle__button {
+form > p {
   font-size: 1.4rem;
-  display: block;
-  border: none;
-  border-radius: 2px;
-  background-color: #000000;
-  color: #ffffff;
-  transition: 0.5s;
-  border: 1px solid transparent;
+  color: red;
+  margin: 1rem 0;
 }
 
-.signup__container-form > form > button:hover,
-.userArticle__button:hover {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid rgb(159, 165, 173, 0.2);
-  cursor: pointer;
+.red {
+  color: red;
 }
 
-.singup__container-formFile > label {
+.file > label {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.4em;
 }
 
-.singup__container-formFile > label:hover {
+.file > label:hover {
   cursor: pointer;
 }
 
-.singup__container-formFile > label > input {
+.file > label > input {
   display: none;
 }
 
-.singup__container-formFile > label > p,
-.singup__container-formFile > label > span {
-  margin-top: 2rem;
-  font-weight: 300;
-}
-
-.singup__container-formFile > label > p {
+.file > label > p {
   color: #000000;
-  border: 1px solid rgb(159, 165, 173, 0.2);
-  border-radius: 2px;
-  font-size: 1.4rem;
+  border: 1px solid #000000;
+  border-radius: 1rem;
+  font-size: 1.6rem;
   transition: 0.5s;
-  padding: 6px 36px;
+  padding: 0.6rem 3rem;
 }
 
-.singup__container-formFile > label > p:hover {
+.file > label > p:hover {
   background-color: #000000;
   color: #ffffff;
   cursor: pointer;
 }
 
-.singup__container-formFile > label > span {
-  font-size: 1.4rem;
-  padding: 6px 1px;
-}
-
-.signup__control,
-.userArticle__button-loading {
-  position: relative;
-  transition: 0.4s;
-}
-
-.signup__control:hover,
-.userArticle__button-loading:hover {
-  border: none !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-.danger {
-  color: red;
+.file > label > span {
+  font-size: 1.6rem;
+  padding: 0.6rem 0.1rem;
 }
