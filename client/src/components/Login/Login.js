@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -93,6 +93,14 @@ export default function Login() {
 
           <Button type="submit" loading={loading} text="Login" />
         </form>
+        <div>
+          <p className={LoginStyles.login}>
+            Don't have an account? &nbsp;
+            <Link to="/signup">
+              <span>Signup</span>
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

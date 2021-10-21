@@ -27,3 +27,18 @@ form > p {
 .red {
   color: red;
 }
+
+.login {
+  font-size: 1.6rem;
+  margin-top: 1.4rem;
+}
+
+.login > a {
+  display: inline-block;
+  text-decoration: none;
+  color: rgb(159, 109, 207);
+}
+
+.login > a:visited {
+  color: rgb(159, 109, 207);
+}

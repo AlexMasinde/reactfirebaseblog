@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
@@ -14,6 +14,7 @@ import usericon from "../../icons/usericon.svg";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+import Navigation from "../Navigation/Navigation";
 
 import SignupStyles from "./Signup.module.css";
 
@@ -25,7 +26,6 @@ export default function Singup() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
     file: "",
   });
 
@@ -61,14 +61,6 @@ export default function Singup() {
     }
   }
 
-  function handleConfirmPassword(e) {
-    const confirmPassword = e.target.value;
-    setUserDetails({ ...userDetails, confirmPassword });
-    if (errors && confirmPassword === userDetails.password) {
-      errors.confirmPassword = "";
-    }
-  }
-
   function handleFile(e) {
     const file = e.target.files[0];
     const fileName = file.name;
@@ -87,13 +79,8 @@ export default function Singup() {
 
   async function handleSignup(e) {
     e.preventDefault();
-    const { username, email, password, confirmPassword, file } = userDetails;
-    const { errors, valid } = validateSingup(
-      username,
-      email,
-      password,
-      confirmPassword
-    );
+    const { username, email, password, file } = userDetails;
+    const { errors, valid } = validateSingup(username, email, password);
 
     if (!valid) return setErrors(errors);
 
@@ -132,6 +119,7 @@ export default function Singup() {
 
   return (
     <div className={SignupStyles.container}>
+      <Navigation />
       <div className={SignupStyles.formcontainer}>
         <h1>Welcome!</h1>
         <p className={authError ? SignupStyles.red : ""}>
@@ -145,6 +133,7 @@ export default function Singup() {
             alt="username"
             onChange={handleUsername}
           />
+          {errors && errors.username && <p>{errors.username}</p>}
           <Input
             type="email"
             icon={emailicon}
@@ -170,6 +159,14 @@ export default function Singup() {
           </div>
           <Button type="submit" loading={loading} text="Signup" />
         </form>
+        <div>
+          <p className={SignupStyles.login}>
+            Don't have an account? &nbsp;
+            <Link to="/login">
+              <span className={SignupStyles.link}>Login</span>
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
