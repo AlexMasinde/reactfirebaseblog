@@ -1,8 +1,8 @@
-.articleview__content {
+.content {
   animation: opacity 1s linear;
 }
 
-.articleview__loader {
+.loader {
   position: absolute;
   bottom: 50%;
   right: 50%;
@@ -17,7 +17,7 @@
   animation: spinner 1s linear infinite;
 }
 
-.articleview__error {
+.error {
   position: absolute;
   top: 30%;
   right: 50%;

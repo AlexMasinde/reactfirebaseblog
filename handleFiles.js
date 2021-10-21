@@ -35,7 +35,7 @@ const uploadCoverImages = async (file) => {
     responsive_breakpoints: {
       create_derived: true,
       min_width: 340,
-      max_width: 854,
+      max_width: 1200,
       transformation: { format: "jpg" },
       max_images: 3,
     },

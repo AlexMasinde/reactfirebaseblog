@@ -68,7 +68,7 @@ export default function Singup() {
     const extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
     if (file && !allowedExtensions.includes(extension)) {
-      setDisplayFileName("Upload JPED, JPG and PNG only");
+      setDisplayFileName("Upload images only");
     }
 
     if (file && allowedExtensions.includes(extension)) {

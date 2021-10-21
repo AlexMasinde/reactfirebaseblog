@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import "./ArticleView.css";
-
 import { database } from "../../firebase";
 
 import Preview from "../Preview/Preview";
 import Navigation from "../Navigation/Navigation";
 
 import useGetAuthor from "../../Hooks/useGetAuthor";
+
+import ArticleViewStyles from "./ArticleView.module.css";
 
 export default function ArticleView() {
   const { id, userId } = useParams();
@@ -36,11 +36,11 @@ export default function ArticleView() {
   const { articleAuthor, authorError, authorLoading } = useGetAuthor(userId);
 
   return (
-    <div className="articleview__container">
+    <div>
       {console.log(articleAuthor)}
       <Navigation />
-      <div className="articleview__content">
-        {loading && <div className="articleview__loader"></div>}
+      <div>
+        {loading && <div className={ArticleViewStyles.loader}></div>}
         {article && !loading && (
           <Preview
             article={article}
@@ -48,7 +48,7 @@ export default function ArticleView() {
             author={{ articleAuthor, authorError, authorLoading }}
           />
         )}
-        {error && <div className="articleview__error">{error}</div>}
+        {error && <div className={ArticleViewStyles.error}>{error}</div>}
       </div>
     </div>
   );
