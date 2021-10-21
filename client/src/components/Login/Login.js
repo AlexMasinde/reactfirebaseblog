@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import "./Login.css";
-
 import { useAuth } from "../../contexts/AuthContext";
 
 import { validateLogin } from "../../utils/validate";
 
+import Input from "../Input/Input";
+import Button from "../Button/Button";
+import Navigation from "../Navigation/Navigation";
+
+import usericon from "../../icons/usericon.svg";
+import passwordicon from "../../icons/passwordicon.svg";
+
+import LoginStyles from "./Login.module.css";
+
 export default function Login() {
   const { userLogin } = useAuth();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  const authError = errors && errors.auth;
 
   function handleEmail(e) {
     setEmail(e.target.value);
@@ -27,6 +36,7 @@ export default function Login() {
     if (errors) {
       errors.password = "";
     }
+    console.log(password);
   }
 
   async function handleLogin(e) {
@@ -44,43 +54,46 @@ export default function Login() {
       setLoading(false);
       history.push("/");
     } catch (err) {
+      console.log(err);
       if (err.code === "auth/user-not-found") {
-        setErrors({ ...errors, email: "User not found" });
+        setErrors({ ...errors, auth: "User not found" });
       }
       if (err.code === "auth/wrong-password") {
-        setErrors({ ...errors, password: "Wrong password" });
+        setErrors({ ...errors, auth: "Wrong password" });
       }
       setLoading(false);
     }
   }
 
-  function goHome() {
-    history.push("/");
-  }
-
   return (
-    <div className="login__container">
-      <form onSubmit={(e) => handleLogin(e)}>
-        <div className="login__header">
-          <p onClick={goHome}>IB</p>
-          <p>LOGIN</p>
-        </div>
-        <label className={errors && errors.email ? "danger" : ""}>
-          {errors && errors.email ? errors.email : "Email"}
-          <input type="email" onChange={(e) => handleEmail(e)} required />
-        </label>
-        <label className={errors && errors.password ? "danger" : ""}>
-          {errors && errors.password ? errors.password : "Password"}
-          <input type="password" onChange={(e) => handlePassword(e)} required />
-        </label>
-        <button
-          disabled={loading}
-          className={loading ? "loadingButton loginButton__loading" : ""}
-          type="submit"
-        >
-          <span className={loading ? "loginLoading__text" : ""}>Login</span>
-        </button>
-      </form>
+    <div className={LoginStyles.container}>
+      <Navigation />
+      <div className={LoginStyles.formcontainer}>
+        <h1>Welcome back!</h1>
+        <p className={authError ? LoginStyles.red : ""}>
+          {authError ? errors.auth : "Sign in to get the most out of IB"}
+        </p>
+        <form onSubmit={(e) => handleLogin(e)}>
+          <Input
+            type="text"
+            icon={usericon}
+            placeholder="Email"
+            alt="Email"
+            onChange={handleEmail}
+          />
+          {errors && errors.email && <p>{errors.email}</p>}
+          <Input
+            type="password"
+            icon={passwordicon}
+            placeholder="Password"
+            alt="Password"
+            onChange={handlePassword}
+          />
+          {errors && errors.password && <p>{errors.password}</p>}
+
+          <Button type="submit" loading={loading} text="Login" />
+        </form>
+      </div>
     </div>
   );
 }

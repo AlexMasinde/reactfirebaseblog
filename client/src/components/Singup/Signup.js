@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import "./Signup.css";
-
 import { useAuth } from "../../contexts/AuthContext";
 import { database } from "../../firebase";
 
 import { validateSingup } from "../../utils/validate";
 import uploadProfilePhoto from "../../utils/uploadProfilePhoto";
+
+import SignupStyles from "./Signup.module.css";
 
 export default function Singup() {
   const { userSignup } = useAuth();

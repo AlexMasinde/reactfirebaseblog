@@ -18,7 +18,7 @@ export function validateSingup(username, email, password, confirmPassword) {
 
   const usernameRegex = /^[a-zA-Z\s]*$/;
   if (!usernameRegex.test(username.trim())) {
-    errors.username = "Username should include letters and spaces only";
+    errors.username = "Include letters and spaces only";
   }
 
   const emailRegex = /\S+@\S+\.\S+/;
@@ -27,7 +27,7 @@ export function validateSingup(username, email, password, confirmPassword) {
   }
 
   if (password.length < 6) {
-    errors.password = "Password should contain at least six characters";
+    errors.password = "Password too short";
   }
 
   if (password !== confirmPassword) {
@@ -47,7 +47,7 @@ export function validateLogin(email, password) {
     errors.email = "Please provide a valid email address";
   }
   if (password.length < 6) {
-    errors.password = "Password should contain at least six characters";
+    errors.password = "Password too short";
   }
 
   return {
